@@ -76,51 +76,51 @@ class Solution:
             print('------')
 
 
-# nums = [-1,2,1,-4]
-# target = 1
-# ans=Solution().threeSumClosest(nums=nums,target=target)
-# print(ans)
+nums = [-1,2,1,-4]
+target = 1
+ans=Solution().threeSumClosest(nums=nums,target=target)
+print(ans)
 
 
-# class Solution:
-#     def removeDuplicates(self, nums):
-#         nums=list(set(nums))
-#         print(nums)
-#         print(type(nums))
-#         return len(nums)
+class Solution:
+    def removeDuplicates(self, nums):
+        nums=list(set(nums))
+        print(nums)
+        print(type(nums))
+        return len(nums)
 
-#         nums[:]=sorted(list(set(nums)))
-#         return len(nums)
+        nums[:]=sorted(list(set(nums)))
+        return len(nums)
 
 
-# nums = [0,0,1,1,1,2,2,3,3,4]
-# ans=Solution().removeDuplicates(nums=nums)
-# print(ans)
+nums = [0,0,1,1,1,2,2,3,3,4]
+ans=Solution().removeDuplicates(nums=nums)
+print(ans)
         
-# a = [-1, 1, 66.25, 333, 333, 1234.5]
-# del a[:]
-# print(a)
+a = [-1, 1, 66.25, 333, 333, 1234.5]
+del a[:]
+print(a)
 
 
-# class Solution:
-#     def plusOne(self, digits):
-#         a=''
-#         for i in digits:
-#             a=a+str(i)
-#         ans=str(int(a)+1)
-#         print(type(ans))
-#         print(ans)
+class Solution:
+    def plusOne(self, digits):
+        a=''
+        for i in digits:
+            a=a+str(i)
+        ans=str(int(a)+1)
+        print(type(ans))
+        print(ans)
 
-#         ans_map=map(int, ans)
-#         anss=list(ans_map)
-#         print(anss)
-#         return(ans)
+        ans_map=map(int, ans)
+        anss=list(ans_map)
+        print(anss)
+        return(ans)
 
-# digits = [4,3,2,1]
-# ans=Solution().plusOne(digits=digits)
-# print(ans)
+digits = [4,3,2,1]
+ans=Solution().plusOne(digits=digits)
+print(ans)
 
-""" class Solution:
+class Solution:
     def generate(self, numRows: int) -> List[List[int]]:
         a=[]
         for i in range(1,numRows+1):
@@ -145,7 +145,7 @@ class Solution:
                     b.append(tmp[k])
                 b.append(1)
             a.append(b)
-        return a """
+        return a
 
 
 class Solution:
@@ -280,6 +280,8 @@ class Solution:
             return False
 
 
+# 204. Count Primes Medium ---------------------------------------
+
 class Solution:
     def countPrimes(self, n):
         if n >= 0 and n <= 5*(10**6):
@@ -323,7 +325,7 @@ n = 99
 ans = Solution().countPrimes(n=n)
 print(ans)
                     
-
+# openbook
 class Solution:
     def countPrimes(self, n):
         if n <=2:
@@ -337,6 +339,7 @@ class Solution:
                 for multiple in range(2*number, n, number):
                     primes[multiple] = False
         return sum(primes)
+
 
 class Solution:
     def isIsomorphic(self, s, t):
@@ -645,4 +648,653 @@ class Solution:
         else:
             return False
             
+
+class Solution:
+    def isUgly(self, n: int) -> bool:
+        if n == 0:
+            return False
+        while n != 1:
+            if n % 2 == 0:
+                n = n / 2
+            elif n % 3 == 0:
+                n = n / 3
+            elif n % 5 == 0:
+                n = n / 5
+            else:
+                return False
+                
+        return True
+
+
+class Solution:
+    def nthUglyNumber(self, n: int) -> int:
+        if n == 1:
+            return 1
+        ugly_list = [1]
+        a = 2
+        while len(ugly_list) < n:
+            i = a
+            while i != 1:
+                if i % 2 == 0:
+                    i = i / 2
+                elif i % 3 == 0:
+                    i = i / 3
+                elif i % 5 == 0:
+                    i = i / 5
+                else:
+                    a += 1
+                    break
+            else:
+                ugly_list.append(a)
+                a += 1
+        print(ugly_list)
+        return ugly_list[n-1]
+        
+        
+
+class Solution:
+    def nthUglyNumber(self, n):
+        multiply_2, multiply_3, multiply_5 = 0, 0, 0
+        ugly_number_list = [1]
+        list_index = 1
+        while list_index < n:
+            next_ugly_number = min(ugly_number_list[multiply_2]*2, ugly_number_list[multiply_3]*3, ugly_number_list[multiply_5]*5)
+            if next_ugly_number == ugly_number_list[multiply_2]*2:
+                print(f'multiply_2: {multiply_2}')
+                print(ugly_number_list[multiply_2])
+                multiply_2 += 1
+            if next_ugly_number == ugly_number_list[multiply_3]*3:
+                print(f'multiply_3: {multiply_3}')
+                print(ugly_number_list[multiply_3])
+                multiply_3 += 1
+            if next_ugly_number == ugly_number_list[multiply_5]*5:
+                print(f'multiply_5: {multiply_5}')
+                print(ugly_number_list[multiply_5])
+                multiply_5 += 1
+            print(f'next_ugly_number: {next_ugly_number}')
+            ugly_number_list.append(next_ugly_number)
+            list_index += 1
+            print(ugly_number_list)
+            print()
+        return ugly_number_list[n-1]
+
+
+class Solution:
+    def moveZeroes(self, nums: List[int]) -> None:
+        """
+        Do not return anything, modify nums in-place instead.
+        """
+        while 0 in nums:
+            nums.remove(0)
+            nums.append('a')
+        nums[:] = [ 0 if x == 'a' else x for x in nums]
+        
+        
+        
+# 290 easy ---------------------------------------
+class Solution:
+    def wordPattern(self, pattern, s):
+        s_list = s.split()
+        print(set(pattern))
+        print(set(s_list))
+        print(set(zip(pattern, s_list)))
+        if len(pattern) != len(s_list):
+            return False
+        if len(set(pattern)) != len(set(s_list)):
+            return False
+        if len(set(pattern)) != len(set(zip(pattern, s_list))):
+            return False
+        return True
+
+
+
+pattern = "abba"
+s = "dog cat cat dog"
+ans = Solution().wordPattern(pattern=pattern, s=s)
+print(ans)
+
+
+# 292 easy ---------------------------------------
+
+class Solution:
+    def canWinNim(self, n: int) -> bool:
+        dict = {1:True, 2:True, 3:True} false true true true false 
+        for i in range(4,n+1):
+            if dict[i-1] == dict
+            dict[i] = 
+        return dict[n]
+# return false if n % 4 == 0
+class Solution:
+    def canWinNim(self, n: int) -> bool:
+        if n < 4 or n % 4 != 0:
+            return True
+        else:
+            return False
+
+class Solution:
+    def canWinNim(self, n: int) -> bool:
+        # if n < 4:
+        #     return True
+        if n % 4 == 0:
+            return False
+        else:
+            return True
+
+
+# 345 easy ---------------------------------------
+class Solution:
+    def reverseVowels(self, s: str) -> str:
+        vowels = ['a', 'e', 'i', 'o', 'u', 'A', 'E', 'I', 'O', 'U']
+        index_list = []
+        vowels_list = []
+        index = 0
+        for i in list(s):
+            if i in vowels:
+                index_list.append(index)
+                vowels_list.append(i)
+            index += 1
+        index_list.reverse()
+        for j in range(len(index_list)):
+            s = list(s)
+            s[index_list[j]] = vowels_list[j]
+        s = ''.join(s)
+        return s
+                
+        
+        
+# Sort Algorithm
+
+# 氣泡排序
+# Big O: Time Complexity: O(n^2), Space Complexity: O(1)
+""" 
+比較相鄰的元素。 如果第一個比第二個大，就交換他們兩個。
+對每一對相鄰元素作同樣的工作，從開始第一對到結尾的最後一對。 這步做完後，最後的元素會是最大的數。
+針對所有的元素重複以上的步驟，除了最後一個。
+持續每次對越來越少的元素重複上面的步驟，直到沒有任何一對數字需要比較。
+ """
+def bubbleSort(arr):
+    for i in range(1, len(arr)):
+        for j in range(0, len(arr)-i):
+            if arr[j] > arr[j+1]:
+                arr[j], arr[j + 1] = arr[j + 1], arr[j]
+    return arr
+
+# 選擇排序
+# Big O: Time Complexity: O(n^2), Space Complexity: O(1)
+""" 
+首先在未排序序列中找到最小（大）元素，存放到排序序列的起始位置
+再從剩餘未排序元素中繼續尋找最小（大）元素，然後放到已排序序列的末尾。
+重複第二步，直到所有元素均排序完畢。
+ """
+def selectionSort(arr):
+    for i in range(len(arr) - 1):
+        # 記錄最小數的索引 
+        minIndex = i
+        for j in range(i + 1, len(arr)):
+            if arr[j] < arr[minIndex]:
+                minIndex = j
+        # i 不是最小數時，將 i 和最小數進行交換 
+        if i != minIndex:
+            arr[i], arr[minIndex] = arr[minIndex], arr[i]
+    return arr
+
+# 插入排序
+# Big O: Time Complexity: O(n^2), Space Complexity: O(1)
+""" 
+將第一待排序序列第一個元素看做一個有序序列，把第二個元素到最後一個元素當成是未排序序列。
+從頭到尾依次掃描未排序序列，將掃描到的每個元素插入有序序列的適當位置。 （如果待插入的元素與有序序列中的某個元素相等，則將待插入元素插入到相等元素的後面。 ）
+ """
+def insertionSort(arr):
+    for i in range(len(arr)):
+        preIndex = i-1 
+        current = arr[i]
+        while preIndex >= 0 and arr[preIndex] > current:
+            arr[preIndex+1] = arr[preIndex]
+            preIndex-=1 
+        arr[preIndex+1] = current
+    return arr
+
+# 345 medium ---------------------------------------
+
+nums = [1,1,1,2,2,3]
+k = 2
+
+from collections import Counter
+
+class Solution:
+    def topKFrequent(self, nums, k):
+        print(Counter(nums)) # Counter({1: 3, 2: 2, 3: 1})
+        print(Counter(nums).most_common(k)) # [(1, 3), (2, 2)]
+        print(dict(Counter(nums).most_common(k))) # {1: 3, 2: 2}
+        return dict(Counter(nums).most_common(k)).keys() # dict_keys([1, 2])
+class Solution:
+	def topKFrequent(self, nums: List[int], k: int) -> List[int]:
+		return dict(Counter(nums).most_common(k)).keys()
+
+
+class Solution:
+    def topKFrequent(self, nums: List[int], k: int) -> List[int]:
+        set_nums = set(nums)
+        dict_count = {}
+        for i in set_nums:
+            count = nums.count(i)
+            dict_count[i] = count
+        count_list = []
+        for c in dict_count.values():
+            count_list.append(c)
+        count_list.sort()
+        count_list.reverse()
+        ans = []
+        # print(dict_count)
+        # print(count_list)
+        for i in range(k):
+            count = count_list[i]
+            for k in dict_count.keys():
+                if dict_count[k] == count:
+                    if not k in ans:
+                        ans.append(k)
+        return ans
+            
+
+# 357. Count Numbers with Unique Digits Medium ---------------------------------------
+# time limit exceeded
+class Solution:
+    def countNumbersWithUniqueDigits(self, n: int) -> int:
+        ans = []
+        for i in range(10 ** n):
+            ans.append(i)
+            for j in list(str(i)):
+                if list(str(i)).count(j) != 1:
+                    ans.remove(i)
+                    break
+        print(ans)
+        return len(ans)
+
+# openbook
+class Solution:
+    def countNumbersWithUniqueDigits(self, n: int) -> int:
+        # f(0) = 1
+        # f(1) = 9 + f(0) = 10
+        # f(2) = 9 * 9 + f(1) = 91
+        # f(3) = 9 * 9 * 8 + f(2) = 739
+        
+        ans = [1, 10]
+        tmp = [9, 9, 8, 7, 6, 5, 4, 3, 2, 1]
+        for i in range(2,n+1):
+            num = 1
+            for j in range(i):
+                num *= tmp[j]  # num = 9, nums = 81
+            num += ans[i-1] # num = 81 + 10 = 91
+            ans.append(num)
+        return ans[n]
+
+
+# 367 easy ---------------------------------------
+class Solution:
+    def isPerfectSquare(self, num: int) -> bool:
+        ans = num ** 0.5
+        return ans.is_integer()
+            
+        
+            
+            
+# 371. Sum of Two Integers Medium ---------------------------------------
+class Solution:
+    def getSum(self, a: int, b: int) -> int:
+        return sum((a,b))
+        
+
+# 343. Integer Break Medium ---------------------------------------
+class Solution(object):
+    def integerBreak(self, n):
+        """
+        :type n: int
+        :rtype: int
+        """
+        dp = [1] * (n+1)
+        for i in range(3, n+1):
+            pruduct = 1
+            for j in range(1, i):
+                print(pruduct)
+                # print(dp[j]*(i-j))
+                print(f'now i is: {i}')
+                print(f'now j is: {j}')
+                print(f'now i-j is: {i-j}')
+                print(f'now dp[j] is: {dp[j]}')
+                print(dp[j]*(i-j)) # 利用前高來算 (加起來要是x的情況, 之前最高是這樣, 再乘以扣掉的, 是否是最高?)
+                print((i-j)*j) # 是否創造更高?
+                pruduct = max(pruduct, dp[j]*(i-j), (i-j)*j)
+                print(f'now product: {pruduct}')
+            dp[i] = pruduct
+            print(dp)
+        return dp[n]
+        
+# openbook
+class Solution(object):
+    def integerBreak(self, n):
+        """
+        :type n: int
+        :rtype: int
+        """
+        dp = [1] * (n+1)
+        for i in range(3, n+1):
+            product = 1
+            for j in range(1, i):
+                product = max(product, dp[j]*(i-j), (i-j)*j)
+            dp[i] = product
+        return dp[n]
+
+n = 12
+ans = Solution().integerBreak(n=n)
+print(ans)
+
+# 387.  First Unique Character in a String Easy ---------------------------------------
+
+class Solution(object):
+    def firstUniqChar(self, s):
+        """
+        :type s: str
+        :rtype: int
+        """
+        for i in list(s):
+            count = list(s).count(i)
+            if count == 1:
+                return s.index(i)
+        return -1
+
+class Solution(object):
+    def firstUniqChar(self, s):
+        """
+        :type s: str
+        :rtype: int
+        """
+        ans = []
+        set_s = set(list(s))
+        for i in set_s:
+            count = list(s).count(i)
+            if count == 1:
+                index = s.index(i)
+                ans.append(index)
+                
+        if ans == []:
+            return -1
+        else:
+            return min(ans)
+            
+
+# 389.   Find the Difference Easy ---------------------------------------
+class Solution(object):
+    def findTheDifference(self, s, t):
+        """
+        :type s: str
+        :type t: str
+        :rtype: str
+        """
+        for i in list(s):
+            t = t.replace(i,"",1) # default arg "count" is max.
+        return t
+        
+        
+# 390.   Elimination Game Medium ---------------------------------------
+# 
+class Solution(object): # Memory Limit Exceeded !!
+    def lastRemaining(self, n):
+        """
+        :type n: int
+        :rtype: int
+        """
+        if n == 1:
+            return 1
+        arr = []
+        for i in range(1, n+1):
+            arr.append(i)
+        while len(arr) > 1:
+            del arr[::2]
+            if len(arr) == 1:
+                return arr[0]
+            del arr[::-2]
+            if len(arr) == 1:
+                return arr[0]
+
+""" 
+<2的幾次方 決定移動幾次
+移動奇數次 頭+2的(次數-1)次方
+移動偶數次 當前數量是偶數 頭不變化
+          當前數量是奇數  頭+2的(次數-1)次方
+
+
+50
+5次
+第一次 2 25
+第二次 4 12
+第三次 8 6
+第四次 8
+第五次8+16=24
+
+ """
+
+ 
+ class Solution(object):
+    def lastRemaining(self, n):
+        """
+        :type n: int
+        :rtype: int
+        """
+        count = 1
+        ans = 1
+        while n >= 2**count:
+            count += 1
+        count -= 1
+        print(count)
+        for i in range(1, count+1):
+            if i % 2 != 0:
+                ans += 2**(i-1)
+            elif i % 2 == 0:
+                if n % 2 == 0:
+                    pass
+                elif n % 2 != 0:
+                    ans += 2**(i-1)
+            n = int(n/2)
+        return ans
+
+
+class Solution(object):
+    def lastRemaining(self, n):
+        """
+        :type n: int
+        :rtype: int
+        """
+        ans = 1
+        i = 1
+        while n != 1:
+            if i % 2 != 0: # i is odd
+                ans += 2**(i-1)
+            else: # i is even
+                if n % 2 != 0: # n is odd
+                    ans += 2**(i-1)
+            n = int(n/2)
+            i += 1
+        return ans
+        return True
+
+
+# 392. Is Subsequence Easy ---------------------------------------
+class Solution(object):
+    def isSubsequence(self, s, t):
+        """
+        :type s: str
+        :type t: str
+        :rtype: bool
+        """
+        index = 0
+        list_t = list(t)
+        a = 0
+        for i in list(s):
+            print(i)
+            if a != 0:
+                del list_t[0:index+1]
+            print(list_t)
+            if not i in list_t:
+                return False
+            else:
+                index = list_t.index(i)
+            print(index)
+            a = 1
+
+
+        
+
+# 397. Integer Replacement Medium ---------------------------------------
+class Solution(object):
+    def integerReplacement(self, n):
+        """
+        :type n: int
+        :rtype: int
+        """
+        count = 0
+        while n != 1:
+            if n % 2 != 0:
+                if ((n-1)/2) % 2 == 0 or (n-1) == 2:  # is even
+                    n -= 1
+                else:
+                    n += 1
+            else:
+                n /= 2
+            count += 1
+        return count
+                    
+# 400. Nth Digit Medium ---------------------------------------
+class Solution(object): # Time Limit Exceeded
+    def findNthDigit(self, n):
+        """
+        :type n: int
+        :rtype: int
+        """
+        tmp = []
+        for i in range(1,n+1):
+            tmp.append(str(i))
+            if len(''.join(tmp)) > n:
+                break
+        return str(''.join(tmp))[n-1]
+
+class Solution(object): # Time Limit Exceeded
+    def findNthDigit(self, n):
+        """
+        :type n: int
+        :rtype: int
+        """
+        a = ""
+        for i in range(1,n+1):
+            a += str(i)
+            if len(a) > n:
+                break
+        return a[n-1]
+
+
+# 409. Longest Palindrome Easy ---------------------------------------
+class Solution(object):
+    def longestPalindrome(self, s):
+        """
+        :type nums: List[int]
+        :rtype: int
+        """
+        single = False
+        nums = list(s)
+        set_list = set(nums)
+        print(set_list)
+        
+        ans = 0
+        for i in set_list:
+            print(i)
+            count_i = nums.count(i)
+            print(count_i)
+            count = (count_i)/2
+            print(count)
+            if count >= 1:
+                ans += count*2
+            if count_i % 2 == 1:
+                single = True
+        if single == True:
+            ans += 1
+
+        return int(ans)
+
+s = "a"
+ans = Solution().longestPalindrome(s=s)
+print(ans)
+
+
+
+# 395. Longest Substring with At Least K Repeating Characters Medium ---------------------------------------
+import collections
+class Solution(object):
+    def longestSubstring(self, s, k):
+        """
+        :type s: str
+        :type k: int
+        :rtype: int
+        """
+        print('-----------------------------')
+        print(f's now is: {s}')
+        count = collections.Counter(s)
+        print(count)
+        st = 0
+        maxst  = 0
+        for i, n in enumerate(s):
+            print('---In enumerate---')
+            print(f's now is: {s}')
+            print(f'enumerate: i={i}, n={n}')
+            print(f'count of "{n}" is {count[n]}')
+            if count[n] < k: # break string!
+                print('count < k, break str.!!!!')
+                print(f'maxst: {maxst}')
+                print(f'st is: {st}, i is: {i}')
+                maxst = max(maxst, self.longestSubstring(s[st:i], k))
+                print('leave recursion')
+                print(f'maxst: {maxst}')
+                print(f'st is: {st}, i is: {i}')
+                st = i + 1
+            print(f'st: {st}')
+        
+        # return len(s) if st == 0 else max(maxst, self.longestSubstring(s[st:], k))
+        print('---return---')
+        print(f'st: {st}')
+        if st == 0:
+            return len(s)
+        else:
+            print(f'maxst: {maxst}')
+            print(f'st is: {st}')
+            return max(maxst, self.longestSubstring(s[st:], k))
+
+        
+
+s = "acbfbfffcbcdbdfffffffffffffffft"
+k = 3
+ans = Solution().longestSubstring(s=s, k=k)
+print(ans)
+
+
+# openbook
+class Solution(object):
+    def longestSubstring(self, s, k):
+        """
+        :type s: str
+        :type k: int
+        :rtype: int
+        """
+        count = collections.Counter(s)
+        st = 0
+        maxst = 0
+        for i, n in enumerate(s):
+            if count[n] < k:
+                maxst =  max(maxst, self.longestSubstring(s[st:i], k))
+                st = i + 1
+        return len(s) if st == 0 else max(maxst, self.longestSubstring(s[st:], k))
+
+
+s = "acbfbfffcbcdbdfffffffffffffffft"
+k = 3
+ans = Solution().longestSubstring(s=s, k=k)
+print(ans)
+
         
