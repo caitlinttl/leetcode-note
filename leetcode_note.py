@@ -355,7 +355,7 @@ class Solution:
         else: return False
 
 
-# singly-linked list 
+# singly-linked list O(n)
 # doubly-linked list Runtime complexity O(1)
 ListNode:
   self.val = val
@@ -1758,7 +1758,8 @@ class Solution(object):
         for n in nums:
             sums_with_n = []  #stores the sums of the subsets that contain n 存放"已知不到terget且這次加上n也不到target"的數字
             for i in sums_of_subsets:
-                if i + n == target: return True
+                if i + n == target: 
+                    return True
                 if i + n < target:
                     sums_with_n.append(i + n)
             sums_of_subsets.update(sums_with_n) # combine two subsets
@@ -2460,26 +2461,1368 @@ class Solution(object):
                 return key
 
 
+# BinarySearch
+class Solution(object):
+    def singleNonDuplicate(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: int
+        """
+        if len(nums) == 1: # For case nums == [1]
+            return nums[0]
+        left = 0
+        right = len(nums) - 1
+        mid = int(left + (right - left)/2)
+        # print(mid, nums[mid])
+        while nums[mid] == nums[mid+1] or nums[mid] == nums[mid-1]:
+            # print(left, right)
+            mid = int(left + (right - left)/2)
+            # print(mid, nums[mid])
+            if mid == left and mid != 0: # For case 答案是最右邊的數字
+                return nums[mid+1]
+            if mid % 2 == 0: # even
+                if nums[mid] != nums[mid+1]:
+                    right = mid 
+                else:
+                    left = mid
+            if mid % 2 != 0: # odd
+                if nums[mid] != nums[mid-1]:
+                    right = mid
+                else:
+                    left = mid
+        return nums[mid]
+        
+
+nums = [1,1,2,3,3,4,4,8,8]
+""" Key Point: 奇數應該要和左邊一樣，偶數應該要和右邊一樣 """
+# nums = [3,3,7,7,10,11,11]
+# nums = [3,7,7,8,8,10,10,22,22,30,30]
+ans = Solution().singleNonDuplicate(nums=nums)
+print(ans)
+
+class Solution(object):
+    def singleNonDuplicate(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: int
+        """
+        n=len(nums)
+        low=0
+        high=n-1
+        
+        while low<high:
+            mid=(low+high)//2
+            
+            if (mid%2==1 and nums[mid-1]==nums[mid]) or (mid%2 == 0 and nums[mid] == nums[mid + 1]):
+                low=mid+1
+            else:
+                high=mid
+        return nums[low]
                 
-# num_title Easy Medium---------------------------------------
-# num_title Easy Medium---------------------------------------
-# num_title Easy Medium---------------------------------------
-# num_title Easy Medium---------------------------------------
+# 704. Binary Search Easy---------------------------------------
+# classical binary search
+class Solution:
+    def search(self, nums: List[int], target: int) -> int:
+        left = 0
+        right = len(nums) - 1
+        while left <= right:
+            mid = int(left + (right-left)/2)
+            if nums[mid] == target:
+                return mid
+            elif nums[mid] < target:
+                left = mid + 1
+            else:
+                right = mid - 1
+        return -1
+        
+
+# 852. Peak Index in a Mountain Array Easy---------------------------------------
+# binary search
+class Solution:
+    def peakIndexInMountainArray(self, arr: List[int]) -> int:
+        left = 0
+        right = len(arr) - 1
+        while left <= right:
+            mid = int(left + (right-left)/2)
+            if arr[mid] > arr[mid-1] and arr[mid] > arr[mid+1]:
+                return mid
+            elif arr[mid] > arr[mid-1]:
+                left = mid + 1
+            elif arr[mid] < arr[mid-1]: 
+                right = mid - 1
+        return -1
+        
+
+
+class Solution:
+    def peakIndexInMountainArray(self, arr: List[int]) -> int:
+        for i in range(1, len(arr)-1):
+            if arr[i] > arr[i-1] and arr[i] > arr[i+1]:
+                return i
+            
+        
+
+
+# 189. Rotate Array Medium---------------------------------------
+
+
+class Solution:
+    def rotate(self, nums: List[int], k: int) -> None:
+        """
+        Do not return anything, modify nums in-place instead.
+        """
+        n = len(nums)
+        tmp = [1]*n # Can't use 0 for tmp list
+        for i in range(n):
+            if i + k <= n - 1:
+                index = i + k
+            else:
+                index = (i + k) % n # Key point !!!!!
+            tmp[index] = nums[i]
+        nums[:] = tmp
+
+class Solution:
+    def rotate(self, nums: List[int], k: int) -> None:
+        """
+        Do not return anything, modify nums in-place instead.
+        """
+        n = len(nums)
+        tmp = [1]*n # Can't use 0 for tmp list
+        for i in range(n):
+            index = (i + k) % n # Key point !!!!!!! 取餘數!!
+            tmp[index] = nums[i]
+        nums[:] = tmp
+
+
+class Solution:
+    def rotate(self, nums: List[int], k: int) -> None:
+        """
+        Do not return anything, modify nums in-place instead.
+        """
+        k = k % len(nums)
+        nums[:] = nums[-k:] + nums[:-k]
+
+# 1260. Shift 2D Grid Easy---------------------------------------
+
+class Solution:
+    def shiftGrid(self, grid: List[List[int]], k: int) -> List[List[int]]:
+        tmp = []
+        for l in grid:
+            n = len(l)
+            for i in l:
+                tmp.append(i)
+                
+        k = k % len(tmp) # Key point !!
+        tmp[:] = tmp[-k:] + tmp[:-k]
+        
+        ans = []
+        count = 0
+        sub = []
+        for i in tmp:
+            count += 1
+            sub.append(i)
+            if count == n:
+                ans.append(sub)
+                count = 0
+                sub = []
+        return ans
+
+        
+
+# 912. Sort an Array Medium---------------------------------------
+
+"""
+Runtime: O(nlogn) expected, O(n^2) worst case.
+With a proper choice of pivot (using the median of medians algorithm), the runtime can be reduced to strict O(nlogn).
+Space: O(n) expected, O(n^2) worst case 
+"""
+class Solution:
+    def sortArray(self, nums: List[int]) -> List[int]:
+        if len(nums) <= 1:
+            return(nums)
+        
+        pivot = random.choice(nums)
+        lt = [v for v in nums if v < pivot]
+        eq = [v for v in nums if v == pivot]
+        gt = [v for v in nums if v > pivot]
+        
+        return self.sortArray(lt) + eq + self.sortArray(gt)
+
+# 941. Valid Mountain Array Easy---------------------------------------
+# Remember 記得要檢查長度和是否最大值在頭尾
+class Solution:
+    def validMountainArray(self, arr: List[int]) -> bool:
+        if len(arr) < 3: # 長度小於三不行
+            return False
+        max_num_index = arr.index(max(arr))
+        if arr[max_num_index] == arr[0] or arr[max_num_index] == arr[-1]: # 在頭尾不行
+            return False
+        for i in range(max_num_index-1):
+            if arr[i] >= arr[i+1]:
+                return False
+        for i in range(max_num_index, len(arr)-1):
+            if arr[i] <= arr[i+1]:
+                return False
+        return True
+        
+
+
+# 228. Summary Ranges Easy---------------------------------------
+class Solution:
+    def summaryRanges(self, nums: List[int]) -> List[str]:
+        if nums == []:
+            return []
+        
+        if len(nums) == 1:
+            return [str(nums[0])]
+        
+        ans = []
+        st = nums[0]
+        end = nums[0]
+        for i in range(len(nums)-1):
+            # print(i)
+            if nums[i]+1 == nums[i+1]:
+                end = nums[i+1]
+                conti = True
+            else:
+                conti = False
+                
+            if conti == False or i == len(nums)-2:
+                # print(st,end)
+                if st == end:
+                    ans.append(str(st))
+
+                else:
+                    tmp = str(st)+"->"+str(end)
+                    ans.append(tmp)
+                st = nums[i+1]
+                end = nums[i+1]
+                if i == len(nums)-2 and conti == False:
+                    ans.append(str(nums[i+1]))
+        return ans
+        
+
+
+# 551. Student Attendance Record I Easy---------------------------------------
+
+class Solution:
+    def checkRecord(self, s: str) -> bool:
+        a_count = s.count('A')
+        if 'LLL' in s or a_count >= 2:
+            return False
+        else:
+            return True
+        
+# Reverse Words in a String III Easy---------------------------------------
+class Solution:
+    def reverseWords(self, s: str) -> str:
+        list_s = s.split(" ")
+        print(list_s)
+        ans = []
+        for i in list_s:
+            ans.append(i[::-1])
+        ans = " ".join(ans)
+        return ans
+
+class Solution:
+    def reverseWords(self, s: str) -> str:
+        return ' '.join(x[::-1] for x in s.split())
+        return ' '.join(s.split()[::-1])[::-1]
+
+
+# 848. Shifting Letters Medium---------------------------------------
+# Remember
+""" 
+chr(97) # 'a'
+ord('a') # 97
+"""
+
+# Time Limit Exceeded
+class Solution:
+    def shiftingLetters(self, s: str, shifts: List[int]) -> str:
+        letter_list = list(string.ascii_lowercase)
+        s_index = []
+        
+        # shifts_list = []
+        # for i in range(len(shifts)):
+        #     shifts_list.append(sum(shifts[i::]))
+            
+        for i in range(len(shifts)):
+            letter = s[i]
+            add = sum(shifts[i::])
+            new_index = (letter_list.index(letter) + add) % 26
+            s_index.append(letter_list[new_index])
+        
+        return "".join(s_index)
+        
+# PASS
+class Solution:
+    def shiftingLetters(self, s: str, shifts: List[int]) -> str:
+        letter_list = list(string.ascii_lowercase)
+        s_index = []
+        shifts_list = [sum(shifts)]
+                    
+        for i in range(len(shifts)):
+            shifts_list.append(shifts_list[i] - shifts[i]) # DP, 為下一次做準備
+            letter = s[i]
+            add = shifts_list[i]
+            new_index = (letter_list.index(letter) + add) % 26
+            s_index.append(letter_list[new_index])
+        
+        return "".join(s_index)
+        
+
+
+# 75. Sort Colors Medium---------------------------------------
+""" 
+in-place!!
+in-place means that the algorithm does " not use extra(auxiliary ) space" for manipulating
+"""
+class Solution:
+    def sortColors(self, nums: List[int]) -> None:
+        """
+        Do not return anything, modify nums in-place instead.
+        """
+        count_0 = nums.count(0)
+        count_1 = nums.count(1)
+        count_2 = nums.count(2)
+        nums[:] = [0]*count_0 + [1]*count_1 + [2]*count_2
+
+
+
+class Solution:
+    def sortColors(self, nums: List[int]) -> None:
+        """
+        Do not return anything, modify nums in-place instead.
+        """
+        for i in range(1, len(nums)):
+            for j in range(0, len(nums)-1):
+                if nums[j] > nums[j+1]:
+                    nums[j], nums[j+1] = nums[j+1], nums[j]
+                
+        
+
+# 876. Middle of the Linked List Easy---------------------------------------
+
+# Definition for singly-linked list.
+# class ListNode:
+#     def __init__(self, val=0, next=None):
+#         self.val = val
+#         self.next = next
+class Solution:
+    def middleNode(self, head: Optional[ListNode]) -> Optional[ListNode]:
+        length = 0
+        cur = head
+        while cur != None:
+            length += 1
+            cur = cur.next
+        cur = head
+        i = 0
+        while i < length//2:
+            cur = cur.next
+            i += 1
+        return cur
+
+class Solution:
+    def middleNode(self, head: Optional[ListNode]) -> Optional[ListNode]:
+        slow = head
+        fast = head
+        while fast.next != None and fast.next.next != None:
+            slow = slow.next
+            fast = fast.next.next
+            
+        return slow if fast.next == None else slow.next
+        
+            
+            
+            
+
+
+# 237. Delete Node in a Linked List Easy---------------------------------------
+class Solution:
+    def deleteNode(self, node):
+        """
+        :type node: ListNode
+        :rtype: void Do not return anything, modify node in-place instead.
+        """
+        node.val = node.next.val
+        node.next = node.next.next
+
+
+
+
+
+# 83. Remove Duplicates from Sorted List Easy---------------------------------------
+# Definition for singly-linked list.
+# class ListNode(object):
+#     def __init__(self, val=0, next=None):
+#         self.val = val
+#         self.next = next
+class Solution(object):
+    def deleteDuplicates(self, head):
+        """
+        :type head: ListNode
+        :rtype: ListNode
+        """
+        while head == None:
+            return head
+        cur = head
+        next_one = head.next
+        while next_one != None:
+            if cur.val == next_one.val:
+                # print('same')
+                cur.next = next_one.next # 相等時, 改變cur的next, 但cur不用前進
+                next_one = next_one.next # next_one都前進
+            else:
+                # print('not_same')
+                cur = cur.next # 不相等時, cur才前進
+                next_one = next_one.next # next_one都前進
+                
+            # print(cur)
+            # print(next_one)
+            # print(head)
+            # print('------------')
+            
+        return head
+        
+""" 
+Your input = [1,2,2,3]
+
+not_same
+ListNode{val: 2, next: ListNode{val: 2, next: ListNode{val: 3, next: None}}}
+ListNode{val: 2, next: ListNode{val: 3, next: None}}
+ListNode{val: 1, next: ListNode{val: 2, next: ListNode{val: 2, next: ListNode{val: 3, next: None}}}}
+-------------
+same !!!
+ListNode{val: 2, next: ListNode{val: 3, next: None}} // key point!!
+ListNode{val: 3, next: None}
+ListNode{val: 1, next: ListNode{val: 2, next: ListNode{val: 3, next: None}}}
+-------------
+not_same
+ListNode{val: 3, next: None}
+None
+ListNode{val: 1, next: ListNode{val: 2, next: ListNode{val: 3, next: None}}}
+-------------
+
+"""
+
+
+
+
+# 82. Remove Duplicates from Sorted List II Medium---------------------------------------
+
+
+# openbook
+
+""" 
+*** use three pointers: pre, cur, post ***
+post moves forward to check whether its value is the same with cur.val
+if not, these three pointers moves forward together
+if yes, post itself moves forward until its value is not same with cur.val
+    at this time, cur is at the start of the duplicate value, and post is after the end
+    then let pre.next=post
+————————————————
+"""
+
+
+# Definition for singly-linked list.
+# class ListNode(object):
+#     def __init__(self, val=0, next=None):
+#         self.val = val
+#         self.next = next
+class Solution(object):
+    def deleteDuplicates(self, head):
+        """
+        :type head: ListNode
+        :rtype: ListNode
+        """
+
+        if head == None or head.next == None:
+            return head
+
+        dummy = ListNode(0)
+        dummy.next = head
+        pre = dummy
+        cur = head
+        post = head.next
+
+        while post != None:
+            while post != None and post.val != cur.val: 
+            # No repeat
+                pre = pre.next
+                cur = cur.next
+                post = post.next
+            while post != None and post.val == cur.val: 
+            # Repeat, post itself moves forward until its value is not same with cur.val
+                post = post.next
+            if post != cur.next:
+                pre.next = post
+                cur = post
+                if post != None:
+                    post = post.next
+
+        return dummy.next
+
+
+
+
+
+            
+
+        
+        
+# 141. Linked List Cycle Easy---------------------------------------
+# openbook
+# Definition for singly-linked list.
+# class ListNode:
+#     def __init__(self, x):
+#         self.val = x
+#         self.next = None
+'''
+1. Use two pointers, walker and runner.
+2. walker moves step by step. runner moves two steps at time.
+3. if the Linked List has a cycle walker and runner will meet at some point.
+'''
+class Solution:
+    def hasCycle(self, head: Optional[ListNode]) -> bool:
+        slow = head
+        fast = head
+        if head == None:
+            return False
+        
+        while fast.next != None and fast.next.next != None:
+            slow = slow.next
+            fast = fast.next.next
+            if slow == fast:
+                return True
+            
+        return False
+
+
+
+def hasCycle(self, head):
+    try:
+        slow = head
+        fast = head.next
+        while slow is not fast:
+            slow = slow.next
+            fast = fast.next.next
+        return True
+    except:
+        return False
+
+
+
+# 206. Reverse Linked List Easy---------------------------------------
+
+# Definition for singly-linked list.
+# class ListNode(object):
+#     def __init__(self, val=0, next=None):
+#         self.val = val
+#         self.next = next
+class Solution(object):
+    def reverseList(self, head):
+        """
+        :type head: ListNode
+        :rtype: ListNode
+        """
+        if head == None or head.next == None:
+            return head
+        
+        rev = head
+        
+        tmp = []
+        tmp.append(head.val)
+        while head.next != None:
+            head = head.next
+            tmp.append(head.val)
+        
+        tmp = tmp[::-1]
+        
+        ans = rev
+        for i in range(0, len(tmp)):
+            rev.val = tmp[i]
+            rev = rev.next
+        
+        return(ans)
+
+# Iterative !!
+# Definition for singly-linked list.
+# class ListNode(object):
+#     def __init__(self, val=0, next=None):
+#         self.val = val
+#         self.next = next
+class Solution(object):
+    def reverseList(self, head):
+        """
+        :type head: ListNode
+        :rtype: ListNode
+        """
+        prev = None
+        while head:
+            print('===========')
+            print(head)
+            
+            curr = head
+            print(curr)
+            
+            head = head.next
+            print(head)
+            
+            curr.next = prev
+            print(curr)
+            
+            prev = curr
+            print(prev)
+        return prev
+
+""" 
+===========
+ListNode{val: 1, next: ListNode{val: 2, next: ListNode{val: 3, next: ListNode{val: 4, next: ListNode{val: 5, next: None}}}}}
+ListNode{val: 1, next: ListNode{val: 2, next: ListNode{val: 3, next: ListNode{val: 4, next: ListNode{val: 5, next: None}}}}}
+ListNode{val: 2, next: ListNode{val: 3, next: ListNode{val: 4, next: ListNode{val: 5, next: None}}}}
+ListNode{val: 1, next: None}
+ListNode{val: 1, next: None}
+===========
+ListNode{val: 2, next: ListNode{val: 3, next: ListNode{val: 4, next: ListNode{val: 5, next: None}}}}
+ListNode{val: 2, next: ListNode{val: 3, next: ListNode{val: 4, next: ListNode{val: 5, next: None}}}}
+ListNode{val: 3, next: ListNode{val: 4, next: ListNode{val: 5, next: None}}}
+ListNode{val: 2, next: ListNode{val: 1, next: None}}
+ListNode{val: 2, next: ListNode{val: 1, next: None}}
+===========
+ListNode{val: 3, next: ListNode{val: 4, next: ListNode{val: 5, next: None}}}
+ListNode{val: 3, next: ListNode{val: 4, next: ListNode{val: 5, next: None}}}
+ListNode{val: 4, next: ListNode{val: 5, next: None}}
+ListNode{val: 3, next: ListNode{val: 2, next: ListNode{val: 1, next: None}}}
+ListNode{val: 3, next: ListNode{val: 2, next: ListNode{val: 1, next: None}}}
+===========
+ListNode{val: 4, next: ListNode{val: 5, next: None}}
+ListNode{val: 4, next: ListNode{val: 5, next: None}}
+ListNode{val: 5, next: None}
+ListNode{val: 4, next: ListNode{val: 3, next: ListNode{val: 2, next: ListNode{val: 1, next: None}}}}
+ListNode{val: 4, next: ListNode{val: 3, next: ListNode{val: 2, next: ListNode{val: 1, next: None}}}}
+===========
+ListNode{val: 5, next: None}
+ListNode{val: 5, next: None}
+None
+ListNode{val: 5, next: ListNode{val: 4, next: ListNode{val: 3, next: ListNode{val: 2, next: ListNode{val: 1, next: None}}}}}
+ListNode{val: 5, next: ListNode{val: 4, next: ListNode{val: 3, next: ListNode{val: 2, next: ListNode{val: 1, next: None}}}}}
+
+
+
+ """
+class Solution(object):
+    def reverseList(self, head):
+        """
+        :type head: ListNode
+        :rtype: ListNode
+        """
+        prev = None
+        while head != None:
+            cur = head   
+            head = head.next
+            cur.next = prev
+            prev = cur
+        return prev
+
+
+
+# 278. First Bad Version Easy---------------------------------------
+
+
+# The isBadVersion API is already defined for you.
+# @param version, an integer
+# @return an integer
+# def isBadVersion(version):
+
+class Solution:
+    def firstBadVersion(self, n):
+        """
+        :type n: int
+        :rtype: int
+        """
+        low = 0
+        high = n
+        if isBadVersion(1) == True:
+            return 1
+
+        while True:
+            if isBadVersion(n) == True and isBadVersion(n-1) == False:
+                return n
+        
+            n = low + (high-low)//2
+            if isBadVersion(n) == True:
+                high = n
+            elif isBadVersion(n) == False:
+                low = n
+        
+
+
+# 34. Find First and Last Position of Element in Sorted Array Medium---------------------------------------
+
+class Solution(object):
+    def searchRange(self, nums, target):
+        """
+        :type nums: List[int]
+        :type target: int
+        :rtype: List[int]
+        """
+        if not target in nums: # No target in nums
+            return [-1, -1]
+        
+        n = len(nums)
+
+        if n == 1: # len = 1 and it's target
+            return [0, 0]
+
+        if nums[0] == target and nums[1] != target: # Only the first num is target
+            return [0, 0]
+
+        if nums[-1] == target: # The last nums is target
+            return [nums.index(target), n-1]
+
+        low = 0
+        high = n
+        while True:
+            n = low + (high-low)//2
+            if nums[n] == target and nums[n+1] != target: # Find the last target index
+                return [nums.index(target), n]
+            if nums[n] > target:
+                high = n
+            elif nums[n] <= target:
+                low = n
+
+
+# 13. Roman to Integer Easy---------------------------------------
+
+class Solution(object):
+    def romanToInt(self, s):
+        """
+        :type s: str
+        :rtype: int
+        """
+        ans = 0
+        roman_dict = {"I":1, "V":5, "X":10, "L":50, "C": 100, "D":500, "M":1000}
+        spec = ["I", "X", "C"]
+        for i in range(len(s)):
+            
+            if i != len(s)-1 and s[i] in spec:
+                # print(s[i])
+                if s[i] == "C":
+                    if s[i+1] == "D" or s[i+1] == "M":
+                        ans -= 100
+                    else:
+                        ans += 100
+                if s[i] == "X":
+                    if s[i+1] == "L" or s[i+1] == "C":
+                        ans -= 10
+                    else:
+                        ans += 10
+                if s[i] == "I":
+                    if s[i+1] == "V" or s[i+1] == "X":
+                        ans -= 1
+                    else:
+                        ans += 1
+                continue
+            
+            ans += roman_dict[s[i]]
+            
+        return ans
+
+# Smart solution
+# *Note: The trick is that the last letter is always added. Except the last one, 
+# if one letter is less than its next one, this letter is subtracted減去.
+class Solution(object):
+    def romanToInt(self, s):
+        """
+        :type s: str
+        :rtype: int
+        """
+        ans = 0
+        roman_dict = {"I":1, "V":5, "X":10, "L":50, "C": 100, "D":500, "M":1000}
+
+        for i in range(len(s)-1): # the last letter of s must be add
+            if roman_dict[s[i]] < roman_dict[s[i+1]]: # If one letter is less than its next one, this letter is subtracted
+                ans -= roman_dict[s[i]]
+            else:
+                ans += roman_dict[s[i]]
+        
+        ans += roman_dict[s[-1]] # the last letter of s must be add
+        
+        return ans
+                
+            
+        
+
+
+# 476. Number Complement Easy---------------------------------------
+
+class Solution:
+    def findComplement(self, num: int) -> int:
+        binary = bin(num)[2:]
+        comp = ["1" if i == "0" else "0" for i in binary] # put loop behind
+        comp = "".join(comp)
+        ans = int(comp, 2)
+        return ans
+        
+# 91. Number of 1 Bits Easy---------------------------------------
+
+class Solution:
+    def hammingWeight(self, n: int) -> int:
+        # print(n)
+        return str(bin(n)[2:]).count("1")
+
+
+# 20. Valid Parentheses Easy---------------------------------------
+# openbook
+# stack pop
+
+class Solution:
+    def isValid(self, s: str) -> bool:
+        stack = []
+        dict_p = {"]":"[", ")":"(", "}":"{"}
+        for char in s:
+            if char in dict_p.values(): # char = [, (, {
+                stack.append(char)
+            elif char in dict_p.keys(): # char = ], ), }
+                if stack == [] or dict_p[char] != stack.pop():
+                    return False
+            else:
+                return False
+        return stack == []
+        
+
+
+
+# 682. Baseball Game Easy---------------------------------------
+
+class Solution:
+    def calPoints(self, ops: List[str]) -> int:
+        ans = []
+        spec = ["C", "D", "+"]
+        for i in ops:
+            if not i in spec:
+                ans.append(int(i))
+            else:
+                if i == "C":
+                    ans.pop()
+                elif i == "D":
+                    ans.append(2*ans[-1])
+                elif i == "+":
+                    ans.append(ans[-1] + ans[-2])
+        return sum(ans)
+                
+        
+
+
+# 739. Daily Temperatures Medium---------------------------------------
+
+# Time Limit Exceeded
+class Solution:
+    def dailyTemperatures(self, temperatures: List[int]) -> List[int]:
+        ans = []
+        while temperatures != []:
+            today = temperatures[0]
+            if not max(temperatures) > today:
+                    ans.append(0)
+            else:
+                for i in range(len(temperatures)):
+                    if temperatures[i] > today:
+                        ans.append(i)
+                        break
+            temperatures.pop(0)
+        return ans
+            
+        
+                
+# stack
+# openbook
+
+""" 
+Improved from the stack solution, which iterates backwards.
+We itereate forward here so that enumerate() can be used.
+Everytime a higher temperature is found, we update answer of the peak one in the stack.
+If the day with higher temperature is not found, we leave the ans to be the default 0.
+ """
+
+def dailyTemperatures(self, temperatures):
+    ans = [0] * len(temperatures)
+    stack = []
+    for i, t in enumerate(temperatures):
+      while stack and temperatures[stack[-1]] < t: # 堆棧不為空, 且當前的溫度大於堆棧頂部的溫度
+        cur = stack.pop() # 更新current為堆棧頂部
+        ans[cur] = i - cur # 更新ans為當前溫度的index-current
+      stack.append(i) # 堆棧為空 或是 當前溫度小於堆棧頂部的溫度, 堆棧新增當前溫度的index
+
+    return ans
+
+        
+        
+# 1249. Minimum Remove to Make Valid Parentheses Medium---------------------------------------
+# stack
+
+class Solution(object):
+    def minRemoveToMakeValid(self, s):
+        """
+        :type s: str
+        :rtype: str
+        """
+        stack = []
+        ans = ""
+        for i in range(len(s)):
+            if s[i] != "(" and s[i] != ")": # if s is letter
+                ans += s[i]
+
+            elif s[i] == ")": # if s is ")"
+                if stack == []: # if there is no unpair-"("
+                    continue
+                elif stack.pop() == "(": # if there is unpair-"("
+                    ans += ")"
+
+            elif s[i] == "(": # if s in "("
+                if i == len(s)-1:  # the last can't be "("
+                    continue
+                else:
+                    stack.append("(")
+                    ans += "("
+
+        if len(stack) != 0: # if there is unpair-"("
+            ans = ans[::-1].replace("(","",len(stack)) # 從後面開始刪除
+            ans = ans[::-1] # 再反序
+
+        return ans
+
+
+s = "lee(t(c)o)de)"
+# s = "))(("
+s = "())()((("
+s = "l)eetcode"
+ans = Solution().minRemoveToMakeValid(s=s)
+print(ans)
+
+# Smart and faster solution
+class Solution(object):
+    def minRemoveToMakeValid(self, s):
+        stack, cur = [], ''
+        for c in s:
+            if c == '(':
+                stack += [cur]
+                cur = ''
+            elif c == ')':
+                if stack:
+                    cur = stack.pop() + '(' + cur + ')' 
+            else:
+                cur += c
+        
+        while stack:
+            cur = stack.pop() + cur
+        
+        return cur
+
+
+
+
+# 1037. Valid Boomerang Easy---------------------------------------
+# 迴力鏢, 算斜率
+class Solution:
+    def isBoomerang(self, points: List[List[int]]) -> bool:
+        if points[0] == points[1] or points[1] == points[2] or points[0] == points[2]: # 任兩點重複
+            return False
+        
+        diff_x1 = points[1][0] - points[0][0]
+        diff_y1 = points[1][1] - points[0][1]
+        try:
+            s1 = diff_y1 / diff_x1 # 算點1和點2的斜率, 如果x等於0 (除數不能是0), 斜率slope為None
+        except:
+            s1 = None
+        
+        diff_x2 = points[2][0] - points[1][0]
+        diff_y2 = points[2][1] - points[1][1]
+        try:
+            s2 = diff_y2 / diff_x2 # 算點2和點3的斜率, 如果x等於0 (除數不能是0), 斜率slope為None
+        except:
+            s2 = None
+
+        return False if s1 == s2 else True # 斜率相等 False, 不相等Ture
+
+class Solution:
+    def isBoomerang(self, p):
+        return (p[0][0] - p[1][0]) * (p[0][1] - p[2][1]) != (p[0][0] - p[2][0]) * (p[0][1] - p[1][1])
+        # diff_x * diff_y != diff_x * diff_y
+        # 1-2 * 1-3 != 1-3 * 1-2
+        # 1-2 * 1-2 != 1-3 * 1-3
+            
+points = [[1,1],[2,2],[3,3]] # false
+points = [[1,1],[2,3],[3,2]] # true
+
+
+
+
+
+
+# 1046. Last Stone Weight Easy---------------------------------------
+
+class Solution:
+    def lastStoneWeight(self, stones: List[int]) -> int:
+        while len(stones) > 1:
+            first = max(stones)
+            stones.remove(first)
+            second = max(stones)
+            stones.remove(second)
+            if first == second:
+                continue
+            else:
+                diff = first - second
+                stones.append(diff)
+        return stones[0] if stones != [] else 0
+            
+        
+# 1047. Remove All Adjacent Duplicates In String Easy---------------------------------------
+
+# Time Limit Exceeded
+class Solution:
+    def removeDuplicates(self, s):
+        print(s)
+
+        for i in range(len(s)-1):
+            if s[i] == s[i+1]:
+                delete = s[i]*2
+                s = s.replace(delete,"")
+                s = self.removeDuplicates(s)
+                break
+        
+        return s
+            
+                
+s = "abbaddggxxseeca"
+ans = Solution().removeDuplicates(s=s)
+print(ans)
+
+
+# Time Limit Exceeded
+class Solution:
+    def removeDuplicates(self, s: str) -> str:
+        
+        deletes = []
+        for i in range(len(s)-1):
+            if s[i] == s[i+1]:
+                delete = s[i]*2
+                deletes.append(delete)
+        
+        if deletes != []:
+            for delete in deletes:
+                s = s.replace(delete,"")
+            s = self.removeDuplicates(s)
+        
+        return s
+            
+
+# Memory Limit Exceeded
+class Solution:
+    def removeDuplicates(self, s: str) -> str:
+        
+        deletes = ["aa","bb","cc","dd","ee","ff","gg","hh","ii",'jj','kk','ll','mm','nn','oo','pp','qq','rr','ss',
+'tt','uu','vv','ww','xx','yy','zz']       
+        
+        for delete in deletes:
+            if delete in s:
+                s = s.replace(delete,"")
+                s = self.removeDuplicates(s)
+        
+        
+        return s
+            
+                
+# stack and pop !!!!!!!!!!!
+class Solution:
+    def removeDuplicates(self, s: str) -> str:
+
+        ans = []
+        for c in s:
+            if ans and ans[-1] == c:
+                ans.pop()
+            else:
+                ans.append(c)
+                
+        return ''.join(ans)
+            
+                
+s = "abbaddggxxseeca"
+
+        
+                
+
+# 1049. Last Stone Weight II  Medium---------------------------------------
+# openbook
+# 背包問題(Knapsack), 求和問題: 416. Partition Equal Subset Sum
+# DP
+""" 
+題目說兩個石頭遇到之後，重量小的會消失，重量大的剩下兩個石頭的重量之差。
+如果倆石頭一樣重，則同時消失。
+最後求出所有石頭相遇之後剩下的那一個石頭重量的最小值。
+其實簡單來說，就是把這一組石頭的重量附上加減號，求和最小的可能。
+
+例如 2,7,4,1,8,1 總和23
+組a 總和11 數字4 7 
+組b 總和12 數字2 1 8 1
+相差1
+
+
+例如 31,26,33,21,40 總和151
+組a 總和73 數字40 33
+組b 總和78 數字31 21 26
+相差5
+
+
+
+我們可以將石頭分成兩部分（都是正整數），兩部分分別求和，
+這兩個和的差值最小的情況即為最優解。
+
+這樣問題就轉化為：是否能找到n個數，他們的和最接近整體和的一半。
+進而題目就變成了另外一題LEETCODE 416.Partition Equal Subset Sum。他們的思路完全相同。
+
+解決這類問題的關鍵是求和，
+確切的說，是需要求出所有數字能夠組成的和的可能，
+然後再從這些和中選出一個最接近目標值的數字（小於等於目標值）即為答案。
+ """
+
+class Solution:
+    def lastStoneWeightII(self, stones: List[int]) -> int:
+        target = sum(stones) / 2
+        sum_of_subsets = set([0]) # 存放已知相加小於/等於target的數字
+        
+        for n in stones:
+            sum_with_n = [] 
+            for i in sum_of_subsets: 
+                if i + n <= target:
+                    sum_with_n.append(i + n) # 存放"已知不到terget且這次加上n也小於等於target"的數字
+            sum_of_subsets.update(sum_with_n)
+            
+        print(max(sum_of_subsets)) # 最接近target的數字
+
+        return sum(stones) - max(sum_of_subsets)*2
+                    
+        
+
+
+# 1051. Height Checker Easy---------------------------------------
+
+class Solution:
+    def heightChecker(self, heights: List[int]) -> int:
+        sort_heights = sorted(heights)
+        ans = 0
+        for i in range(len(heights)):
+            if heights[i] != sort_heights[i]:
+                ans += 1
+        return ans
+        
+
+
+
+# 953. Verifying an Alien Dictionary Easy---------------------------------------
+
+class Solution:
+    def isAlienSorted(self, words: List[str], order: str) -> bool:
+        index_map = {n: i for i, n in enumerate(order)}
+        for a, b in zip(words, words[1:]):
+            if len(a) > len(b) and a[:len(b)] == b: # 前面內容一樣, 但是長的排在前
+                return False
+            for s1, s2 in zip(a, b): # 比每一個單字
+                if index_map[s1] < index_map[s2]: # 如果字母順序小的確實在前面, break. 如果相等, 繼續比.
+                    break
+                elif index_map[s1] > index_map[s2]:
+                    return False
+        return True
+        
+
+words = ["hello","leetcode"]
+order = "hlabcdefgijkmnopqrstuvwxyz"
+        
+ans = Solution().isAlienSorted(words=words, order=order)
+print(ans)
+
+
+
+
+
+# 961. N-Repeated Element in Size 2N Array Easy---------------------------------------
+
+class Solution:
+    def repeatedNTimes(self, nums: List[int]) -> int:
+        n = len(set(nums)) - 1
+        for k, c in Counter(nums).items():
+            if c == n:
+                return k
+        
+
+# 36. Valid Sudoku Medium---------------------------------------
+
+class Solution:
+    def isValidSudoku(self, board: List[List[str]]) -> bool:
+
+        # check column
+        # a = list(zip(*board)) 可以用zip(*example)來做橫豎交換
+        for i in range(9):
+            tmp  = []
+            for row in board:
+                if row[i] != "." and row[i] in tmp:
+                    return False
+                else:
+                    tmp.append(row[i])
+                    
+        # check row
+        for row in board:
+            tmp  = []
+            for n in row:
+                if n != "." and n in tmp:
+                    return False
+                else:
+                    tmp.append(n)
+                    
+        # check squre            
+        index = [0,3,6]
+        squres = []
+        for i in index:
+            for j in index:
+                squres.append([i,j])
+
+        for squre in squres:
+            grid = []
+            for i in range(squre[0],squre[0]+3):
+                for j in range(squre[1],squre[1]+3):
+                    if board[i][j] != "." and board[i][j] in grid:
+                        return False
+                    grid.append(board[i][j])
+            # print(grid)
+
+        return True
+                        
+             
+
+
+
+# 53. Maximum Subarray Easy---------------------------------------
+# time limit Exceeded
+# DP
+# openbook
+class Solution(object):
+    def maxSubArray(self, nums):
+        if len(nums) == 1:
+            return nums[0]
+
+        sum_list = [nums[0]]
+        for i in range(1, len(nums)):
+            sum_list.append(sum_list[-1] + nums[i])
+
+        max_sum = max(sum_list)
+
+        for i in range(len(sum_list)-1):
+            cur_max = max(sum_list[i+1:]) - sum_list[i]
+            if cur_max > max_sum:
+                max_sum = cur_max
+
+        return max_sum
+
+
+class Solution:
+    def maxSubArray(self, nums: List[int]) -> int:
+        max_sum = cur_sum = nums[0]
+        for n in nums[1:]: # 0被放進去了, 從1開始
+            cur_sum = max(n, cur_sum+n) # 是n大, 還是從以前加到n大
+            max_sum = max(max_sum, cur_sum) # 是曾經出現過的大, 還是cur有創新高
+            
+        return max_sum
+            
+
+
+# 541. Reverse String II Easy---------------------------------------
+
+class Solution:
+    def reverseStr(self, s: str, k: int) -> str:
+        ans = ""
+        if len(s) < k:
+            s = s[::-1]
+            return s
+        elif len(s) < k*2 and len(s) >= k:
+            r = s[0:k]
+            s = r[::-1] + s[k:]
+            return s
+          
+        elif len(s) >= k*2:
+            for i in range(0, len(s), k*2):
+                r = s[i:i+k]
+                ans += r[::-1] + s[i+k:i+k*2]
+            return ans
+               
+                
+        
+
+
+# 561. Array Partition I Easy---------------------------------------
+
+class Solution:
+    def arrayPairSum(self, nums: List[int]) -> int:
+        nums = sorted(nums)
+        return sum(nums[0:-1:2])
+        
+        ans = 0
+        for i in range(0,len(nums),2):
+            ans += nums[i]
+            
+        return ans
+        
+        
+
+
+# 2022. Convert 1D Array Into 2D Array Easy---------------------------------------
+class Solution:
+    def construct2DArray(self, original: List[int], m: int, n: int) -> List[List[int]]:
+        if m * n != len(original):
+            return []
+
+        ans = []
+        for i in range(0,len(original),n):
+            sub_list = []
+            for j in range(n):
+                sub_list.append(original[i+j])
+            ans.append(sub_list)
+
+        return ans        
+
+
+
+# 566. Reshape the Matrix Easy---------------------------------------
+
+class Solution:
+    def matrixReshape(self, mat: List[List[int]], r: int, c: int) -> List[List[int]]:
+        mat_list = []
+        for row in mat:
+            for n in row:
+                mat_list.append(n)
+
+        if r * c != len(mat_list):
+            return mat
+
+        ans = []
+        for i in range(0,len(mat_list),c):
+            sub_list = []
+            for j in range(c):
+                sub_list.append(mat_list[i+j])
+            ans.append(sub_list)
+
+        return ans
+
+
 # num_title Easy Medium---------------------------------------
 # num_title Easy Medium---------------------------------------
 
 
 
-# num_title Easy Medium---------------------------------------
-# num_title Easy Medium---------------------------------------
-# num_title Easy Medium---------------------------------------
-# num_title Easy Medium---------------------------------------
-# num_title Easy Medium---------------------------------------
-# num_title Easy Medium---------------------------------------
-# num_title Easy Medium---------------------------------------
 
-
-
-
-
-
+# num_title Easy Medium---------------------------------------
+# num_title Easy Medium---------------------------------------
+# num_title Easy Medium---------------------------------------
+# num_title Easy Medium---------------------------------------
+# num_title Easy Medium---------------------------------------
+# num_title Easy Medium---------------------------------------
+# num_title Easy Medium---------------------------------------
