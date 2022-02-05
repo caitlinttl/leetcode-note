@@ -3813,7 +3813,871 @@ class Solution:
         return ans
 
 
-# num_title Easy Medium---------------------------------------
+# 2027. Minimum Moves to Convert String Easy---------------------------------------
+
+class Solution:
+    def minimumMoves(self, s: str) -> int:
+        i = 0
+        count = 0
+        while i < len(s):
+            if s[i] == "X":
+                count += 1
+                i += 3
+            else:
+                i += 1
+
+        return count
+
+
+class Solution:
+    def minimumMoves(self, s: str) -> int:
+        i = 0
+        count = 0
+        while i + 2 < len(s):
+            if s[i] == "X":
+                count += 1
+                i += 3
+            else:
+                i += 1
+            if i + 2 >= len(s) and "X" in s[i::]:
+                count += 1
+
+        return count        
+
+# 709. To Lower Case Easy---------------------------------------
+
+class Solution:
+    def toLowerCase(self, s: str) -> str:
+        return s.lower()
+        
+
+
+
+# 94. Binary Tree Inorder Traversal Easy---------------------------------------
+# Tree
+# inorder 左 自己 右
+# https://blog.csdn.net/fuxuemingzhu/article/details/79294461
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class Solution:
+    def inorderTraversal(self, root: Optional[TreeNode]) -> List[int]:
+        ans = []
+        def inorder(root):
+            if root == None:
+                return None
+
+            if root.left != None:     # 左
+                inorder(root.left)
+
+            ans.append(root.val)      # 自己
+
+            if root.right != None:    # 右
+                inorder(root.right)
+        
+        inorder(root)
+        return ans
+
+class Solution:
+    def preorderTraversal(self, root: Optional[TreeNode]) -> List[int]:
+        ans = []
+        def inorder(root):
+            if root == None:
+                return None
+
+            ans.append(root.val)      # 自己
+                
+            if root.left != None:     # 左
+                inorder(root.left)
+            
+            if root.right != None:    # 右
+                inorder(root.right)
+        
+        inorder(root)
+        return ans
+
+class Solution:
+    def postorderTraversal(self, root: Optional[TreeNode]) -> List[int]:
+        ans = []
+        def inorder(root):
+            if root == None:
+                return None
+            if root.left != None:     # 左
+                inorder(root.left)
+            
+            if root.right != None:    # 右
+                inorder(root.right)
+            
+            ans.append(root.val)      # 自己
+        
+        inorder(root)
+        return ans
+
+        
+"""
+root = [1,null,2,3]
+TreeNode{val: 1, left: None, right: TreeNode{val: 2, left: TreeNode{val: 3, left: None, right: None}, right: None}}
+inorder: [1,3,2]
+preorder: [1,2,3]
+postorder: [3,2,1]
+ """
+
+
+
+# 101. Symmetric Tree Easy---------------------------------------
+# 判斷樹是否對稱
+
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class Solution:
+    def isSymmetric(self, root: Optional[TreeNode]) -> bool:
+        if root == None: # root 為空, return True
+            return True
+        else:
+            return self.isSymmetricTree(root.left, root.right) #root 不為空, 往下看, 傳入root的左子樹和右子樹
+        
+    def isSymmetricTree(self, left, right):
+        if left == None or right == None: # 左右子樹有其中一個為空
+            return True if left == right else False # 如果左右子樹都為空為True, 如果一個空一個不空為False
+        if left.val != right.val: #左右子樹都不為空, 那比左右子樹的值, 值如果不同為False
+            return False
+        # 左右子樹的值相同, 繼續往下比, recusion自己, 傳入邊緣情況與中間情況
+        edge = self.isSymmetricTree(left.left, right.right) # 傳入邊緣(左的左 和 右的右比)
+        center = self.isSymmetricTree(left.right, right.left) # 中間情況(左的右 和 右的左比)
+        if edge == True and center == True: # 如果邊緣和中間都是True, 則為True
+            return True
+        
+""" TreeNode{val: 1, left: TreeNode{val: 2, left: None, right: TreeNode{val: 3, left: None, right: None}}, right: TreeNode{val: 2, left: None, right: TreeNode{val: 3, left: None, right: None}}}
+            
+root = [1,2,2,null,3,null,3] """
+
+
+
+# 104. Maximum Depth of Binary Tree Easy---------------------------------------
+
+# 問的是tree的層數, 所以要加一(加自己)
+# DFS
+""" 
+-DFS思路
+- 利用pre-order (node, L, R)
+- 先看node是不是空 是空的話 那return 0 (base case)
+- 不是的話 那就往左往右看下去找到最深的pth因為雨分樹有雨條路 所以要比較
+左邊右邊找出比較深的那條路 找到之後 也要把自己算進去所以pth的深度在加1
+ """
+
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class Solution:
+    def maxDepth(self, root: Optional[TreeNode]) -> int:
+        if root == None:
+            return 0
+        return 1 + max(self.maxDepth(root.left), self.maxDepth(root.right))
+
+
+# 108. Convert Sorted Array to Binary Search Tree Easy---------------------------------------
+""" 
+因此採用二元搜尋來產生二元搜索樹,
+首先將該陣列的中間值作為整個樹的根結點,
+採用遞迴分別建立左右節點 
+
+https://desolve.medium.com/%E5%BE%9Eleetcode%E5%AD%B8%E6%BC%94%E7%AE%97%E6%B3%95-35-bst-3-b1f225f39aa3
+
+"""
+
+class Solution:
+    def sortedArrayToBST(self, nums: List[int]) -> Optional[TreeNode]:
+        if nums == None or len(nums) == 0:
+            return None
+        return self.getNode(nums, 0, len(nums) -1)
+
+    def getNode(self, nums: List[int], left:int, right:int):
+        if left > right:
+            return None
+        mid = (left + right) // 2
+        root = TreeNode(nums[mid])
+        root.left = self.getNode(nums, left, mid-1)
+        root.right = self.getNode(nums, mid+1, right)
+        return root
+
+
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class Solution:
+    def sortedArrayToBST(self, nums: List[int]) -> Optional[TreeNode]:
+        if nums == None or len(nums) == 0:
+            return None
+        return self.getNode(nums, 0, len(nums) -1)
+
+    def getNode(self, nums: List[int], left:int, right:int):
+        print('----getNode---')
+        print(nums)
+        print(left)
+        print(right)
+        if left > right:
+            return None
+        mid = (left + right) // 2
+        print('mid=' + str(mid))
+        root = TreeNode(nums[mid])
+        print(root)
+        root.left = self.getNode(nums, left, mid-1)
+        root.right = self.getNode(nums, mid+1, right)
+        print(root)
+        return root
+        
+
+""" 
+----getNode---
+[-10, -3, 0, 5, 9]
+0
+4
+mid=2
+TreeNode{val: 0, left: None, right: None}
+----getNode---
+[-10, -3, 0, 5, 9]
+0
+1
+mid=0
+TreeNode{val: -10, left: None, right: None}
+----getNode---
+[-10, -3, 0, 5, 9]
+0
+-1
+----getNode---
+[-10, -3, 0, 5, 9]
+1
+1
+mid=1
+TreeNode{val: -3, left: None, right: None}
+----getNode---
+[-10, -3, 0, 5, 9]
+1
+0
+----getNode---
+[-10, -3, 0, 5, 9]
+2
+1
+TreeNode{val: -3, left: None, right: None}
+TreeNode{val: -10, left: None, right: TreeNode{val: -3, left: None, right: None}}
+----getNode---
+[-10, -3, 0, 5, 9]
+3
+4
+mid=3
+TreeNode{val: 5, left: None, right: None}
+----getNode---
+[-10, -3, 0, 5, 9]
+3
+2
+----getNode---
+[-10, -3, 0, 5, 9]
+4
+4
+mid=4
+TreeNode{val: 9, left: None, right: None}
+----getNode---
+[-10, -3, 0, 5, 9]
+4
+3
+----getNode---
+[-10, -3, 0, 5, 9]
+5
+4
+TreeNode{val: 9, left: None, right: None}
+TreeNode{val: 5, left: None, right: TreeNode{val: 9, left: None, right: None}}
+TreeNode{val: 0, left: TreeNode{val: -10, left: None, right: TreeNode{val: -3, left: None, right: None}}, right: TreeNode{val: 5, left: None, right: TreeNode{val: 9, left: None, right: None}}}
+
+
+------------------------------------------------
+Input: nums = [-10,-3,0,5,9]
+Output: [0,-3,9,-10,null,5]
+Explanation: [0,-10,5,null,-3,null,9] is also accepted:
+"""
+
+
+
+
+# 226. Invert Binary Tree Easy---------------------------------------
+
+# 反轉二元樹
+# Definition for a binary tree node.
+# class TreeNode(object):
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class Solution(object):
+    def invertTree(self, root):
+        """
+        :type root: TreeNode
+        :rtype: TreeNode
+        """
+        # 節點為null, return None
+        if root == None:
+            return None
+
+        # 節點沒有子結點, return root
+        if root.left == None and root.right == None:
+            return root
+
+        # 左右反轉
+        temp = root.right
+        root.right = self.invertTree(root.left)
+        root.left = self.invertTree(temp)
+        print('after invert')
+        print(root)
+
+        return root
+
+root = [4,2,7,1,3,6,9]
+
+
+# 100. Same Tree Easy---------------------------------------
+
+# 判斷是不是相同的樹
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class Solution:
+    def isSameTree(self, p: Optional[TreeNode], q: Optional[TreeNode]) -> bool:
+
+        if p == None and q == None: # 如果都是None
+            return True
+        elif p != None and q != None: # 如果都不是None
+            if p.val != q.val:
+                return False
+        else:  # 如果一個是None, 一個不是
+            return False
+
+
+        if self.isSameTree(p.right, q.right) == True and self.isSameTree(p.left, q.left) == True: # 左右同時相等
+            return True
+        else:
+            return False
+
+
+p = [1,2,3]
+q = [1,2,3]
+
+
+
+# 589. N-ary Tree Preorder Traversal Easy---------------------------------------
+
+"""
+# Definition for a Node.
+class Node:
+    def __init__(self, val=None, children=None):
+        self.val = val
+        self.children = children
+"""
+
+class Solution:
+    def preorder(self, root: 'Node') -> List[int]:
+        ans = []
+        def preorder(root):
+            if root == None:
+                return None
+            if root.val == None:
+                return None
+            ans.append(root.val)   # 自己
+
+            if root.children != None:    # 小孩
+                for i in range(len(root.children)):
+                    preorder(root.children[i])
+                    
+        preorder(root)
+        return ans
+        
+
+
+
+
+
+# 590. N-ary Tree Postorder Traversal Easy---------------------------------------
+
+"""
+# Definition for a Node.
+class Node:
+    def __init__(self, val=None, children=None):
+        self.val = val
+        self.children = children
+"""
+
+class Solution:
+    def postorder(self, root: 'Node') -> List[int]:
+        ans = []
+        def postorder(root):
+            if root == None:
+                return None
+            if root.val == None:
+                return None
+            if root.children != None:  # 小孩
+                for i in range(len(root.children)):
+                    postorder(root.children[i])
+
+            ans.append(root.val) # 自己
+                                            
+        postorder(root)
+        return ans
+        
+
+
+
+# 605. Can Place Flowers Easy---------------------------------------
+# remember to check edge case
+
+class Solution:
+    def canPlaceFlowers(self, flowerbed: List[int], n: int) -> bool:
+        tmp = [0] # check head
+        count = 0
+        flowerbed.append(0) # check tail
+        for i in flowerbed:
+            if i == 0:
+                tmp.append(0)
+                if tmp == [0,0,0]:
+                    tmp.pop()
+                    tmp.pop()
+                    count += 1
+            if i == 1:
+                tmp = []
+            
+        
+        return True if count >= n else False
+        
+
+# 599. Minimum Index Sum of Two Lists Easy---------------------------------------
+
+class Solution:
+    def findRestaurant(self, list1, list2):
+        rest = {}
+        score = []
+        ans = []
+        for i in range(len(list1)):
+            for j in range(len(list2)):
+                if list1[i] == list2[j]:
+                    rest[list1[i]] = i+j    
+                    score.append(i+j)
+        for k, v in rest.items():
+            if v == min(score):
+                ans.append(k)
+
+        return ans
+    
+
+list1 = ["Shogun","Tapioca Express","Burger King","KFC"]
+list2 = ["KFC","Burger King","Tapioca Express","Shogun"]
+ans = Solution().findRestaurant(list1=list1, list2=list2)
+print(ans)
+
+
+class Solution:
+    def findRestaurant(self, list1, list2):
+        rest = {}
+        score = []
+        ans = []
+        for i in range(len(list1)):
+            if list1[i] in list2:
+                rest[list1[i]] = i + list2.index(list1[i])
+                score.append(i + list2.index(list1[i]))
+                
+        for k, v in rest.items():
+            if v == min(score):
+                ans.append(k)
+        return ans
+
+
+
+# 575. Distribute Candies Easy---------------------------------------
+
+class Solution:
+    def distributeCandies(self, candyType: List[int]) -> int:
+        can_eat = len(candyType) / 2
+        type_num = len(set(candyType))
+        if type_num >= can_eat:
+            return int(can_eat)
+        else:
+            return int(type_num)
+
+
+# 5. Longest Palindromic Substring  Medium---------------------------------------
+# openbook
+class Solution(object):
+    def longestPalindrome(self, s):
+        """
+        :type s: str
+        :rtype: str
+        """
+
+        res = ""
+        for i in range(len(s)):
+            print(self.helper(s,i,i))
+            print(self.helper(s,i,i+1))
+            res = max(self.helper(s,i,i), self.helper(s,i,i+1), res, key=len)
+            print(res)
+
+        return res
+       
+        
+    def helper(self,s,l,r):
+        print(l,r)
+        
+        while 0<=l and r < len(s) and s[l]==s[r]:
+                print(l,r)
+                l-=1; r+=1
+                print(s[l+1:r])
+        return s[l+1:r]
+
+
+s = "babad"
+ans = Solution().longestPalindrome(s=s)
+print(ans)
+
+
+
+class Solution:
+    def longestPalindrome(self, s: str) -> str:
+        res = ''
+        for i in range(len(s)):
+            res = max(self.helper(s,i,i), self.helper(s,i,i+1), res, key=len)
+            
+        return res
+    
+    def helper(self,s,l,r):
+        while 0 <= l and r < len(s) and s[l]==s[r]:
+            l -= 1
+            r += 1
+        return s[l+1:r]
+        
+
+
+# 733. Flood Fill Easy---------------------------------------
+# Depth-First Search
+# openbook
+
+class Solution(object):
+    def floodFill(self, image, sr, sc, newColor):
+        """
+        :type image: List[List[int]]
+        :type sr: int
+        :type sc: int
+        :type newColor: int
+        :rtype: List[List[int]]
+        """
+        m = len(image)
+        n = len(image[0])
+
+        color = image[sr][sc]
+        if color == newColor:
+            return image
+        
+        def dfs(r,c):
+            if image[r][c] == color:
+                image[r][c] = newColor
+                if r >= 1:
+                    dfs(r-1, c)
+                if r+1 < m:
+                    dfs(r+1, c)
+                if c >= 1:
+                    dfs(r, c-1)
+                if c+1 < n:
+                    dfs(r, c+1)
+
+
+        dfs(sr, sc)
+        return image
+        
+
+image = [[1,1,1],[1,1,0],[1,0,1]]
+sr = 1
+sc = 1
+newColor = 2
+ans = Solution().floodFill(image, sr, sc, newColor)
+print(ans)
+
+
+
+# 735. Asteroid Collision Medium---------------------------------------
+
+
+class Solution(object):
+    def asteroidCollision(self, asteroids):
+        """
+        :type asteroids: List[int]
+        :rtype: List[int]
+        """
+        ans = [asteroids[0]]
+        for i in asteroids[1:]:
+            if ans == []:  # 如果碰撞完 list空了, 直接append
+                ans.append(i)
+            else:
+                if (i > 0 and ans[-1] > 0) or (i < 0 and ans[-1] < 0): # 如果同方向, 直接append
+                    ans.append(i)
+                elif i > 0 and ans[-1] < 0: # 如果相反方向(遠離), 直接append
+                    ans.append(i)
+                elif i < 0 and ans[-1] > 0: # 如果反方向(相撞)
+                    if abs(i) > abs(ans[-1]): # 如果i的絕對值比較大
+                        ans.pop()    # 把ans的最後一個換成i
+                        ans.append(i)
+                        ans = self.asteroidCollision(ans) # 整理ans
+                    elif abs(i) == abs(ans[-1]): # 如果i的絕對值和ans的最後一個相同, ans的最後一個消失
+                        ans.pop()
+        return ans
+
+# 可以簡寫成這樣
+class Solution(object):
+    def asteroidCollision(self, asteroids):
+        """
+        :type asteroids: List[int]
+        :rtype: List[int]
+        """
+        ans = [asteroids[0]]
+        for i in asteroids[1:]:
+            if ans == []: # 如果碰撞完 list空了, 直接append
+                ans.append(i)
+            else:
+                if i < 0 and ans[-1] > 0: # 如果反方向(相撞)
+                    if abs(i) > abs(ans[-1]):
+                        ans.pop()
+                        ans.append(i)
+                        ans = self.asteroidCollision(ans)
+                    elif abs(i) == abs(ans[-1]):
+                        ans.pop()
+                else: # 如果同方向, 或如果相反方向(遠離), 直接append
+                    ans.append(i)
+        return ans        
+        
+
+asteroids = [5,-5]
+asteroids = [-5,-10,5]
+asteroids = [5,10,-5]
+asteroids = [1,-1,-2,-2]
+asteroids = [10,2,-5]
+asteroids = [-2,-1,1,2]
+ans = Solution().asteroidCollision(asteroids)
+print(ans)
+
+
+class Solution(object):
+    def asteroidCollision(self, asteroids):
+        res = []
+        for asteroid in asteroids:
+            # We only need to resolve collisions under the following conditions:
+            # - stack is non-empty
+            # - current asteroid is -ve
+            # - top of the stack is +ve
+            while len(res) and asteroid < 0 and res[-1] > 0:
+                # Both asteroids are equal, destroy both.
+                if res[-1] == -asteroid: 
+                    res.pop()
+                    break
+                # Stack top is smaller, remove the +ve asteroid 
+                # from the stack and continue the comparison.
+                elif res[-1] < -asteroid:
+                    res.pop()
+                    continue
+                # Stack top is larger, -ve asteroid is destroyed.
+                elif res[-1] > -asteroid:
+                    break
+            else:
+                # -ve asteroid made it all the way to the 
+                # bottom of the stack and destroyed all asteroids.
+                res.append(asteroid)
+        return res
+
+# faster solution
+class Solution(object):
+    def asteroidCollision(self, asteroids):
+        ans = []
+        for i in asteroids:
+            while len(ans) and i < 0 and ans[-1] > 0: # 如果ans有東西 且i是負的, 且ans最後一個是正的
+                if ans[-1] == -i: # 一樣大撞掉
+                    ans.pop()
+                    break
+                elif ans[-1] < -i: # i比較大, 繼續撞
+                    ans.pop()
+                    continue
+                elif ans[-1] > -i: # i比較小無視
+                    break
+            else:
+                ans.append(i)
+        return ans
+
+
+
+
+
+
+# 744. Find Smallest Letter Greater Than Target Easy---------------------------------------
+
+# string.ascii_lowercase
+class Solution(object):
+    def nextGreatestLetter(self, letters, target):
+        """
+        :type letters: List[str]
+        :type target: str
+        :rtype: str
+        """
+        chara = list(string.ascii_lowercase) * 2
+        target_index = chara.index(target)
+        for i in chara[target_index+1::]:
+            if i in letters:
+                return i
+        
+
+
+# 747. Largest Number At Least Twice of Others Easy---------------------------------------
+class Solution:
+    def dominantIndex(self, nums: List[int]) -> int:
+        if len(nums) == 1:
+            return 0
+        sort_nums = sorted(nums, reverse=True)
+        if sort_nums[0] >= sort_nums[1]*2:
+            return nums.index(sort_nums[0])
+        else:
+            return -1
+        
+
+
+
+# 766. Toeplitz Matrix Easy---------------------------------------
+class Solution:
+    def isToeplitzMatrix(self, matrix: List[List[int]]) -> bool:
+        r = len(matrix)
+        c = len(matrix[0])
+        
+        for i in range(c):
+            head = matrix[0][i]
+            point_r, point_c = 0, 0
+            while point_r < r and i+point_c < c:
+                next = matrix[point_r][i+point_c]
+                if next != head:
+                    return False
+                point_r += 1
+                point_c += 1
+                
+        for j in range(r):
+            head = matrix[j][0]
+            point_r, point_c = 0, 0
+            while point_r+j < r and point_c < c:
+                next = matrix[j+point_r][point_c]
+                if next != head:
+                    return False
+                point_r += 1
+                point_c += 1
+                
+        return True
+            
+
+class Solution:
+    def isToeplitzMatrix(self, matrix: List[List[int]]) -> bool:
+        for i in range(len(matrix)-1 ):
+            for j in range(len(matrix[0]) -1):
+                if matrix[i][j] != matrix[i+1][j+1]:
+                    return False
+        return True
+        
+
+
+# 746. Min Cost Climbing Stairs Easy---------------------------------------
+
+# openbook
+# 列出爬到每一階的最小總成本
+# cost[i] 等於每一階的最小成本
+
+class Solution:
+    def minCostClimbingStairs(self, cost: List[int]) -> int:
+        for i in range(2, len(cost)): # 從2開始，因為可以到0或1的成本是自己本身
+            cost[i] += min(cost[i-1], cost[i-2]) # 總成本 = 自己本身 + 前一階或前二階比較小的那一個
+        print(cost)
+        return min(cost[-1], cost[-2]) # 前一階或前二階都可以到達終點, return小的那一個
+            
+            
+cost = [10,15,20]
+cost = [1,100,1,1,1,100,1,1,100,1]
+
+
+# 771. Jewels and Stones Easy---------------------------------------
+
+
+class Solution:
+    def numJewelsInStones(self, jewels: str, stones: str) -> int:
+        ans = 0
+        for i in stones:
+            if i in jewels:
+                ans += 1
+        return ans
+                
+
+jewels = "aA"
+stones = "aAAbbbb"        
+class Solution:
+    def numJewelsInStones(self, jewels: str, stones: str) -> int:
+        print(sum(map(jewels.count, stones)))
+
+
+
+
+class Solution:
+    def numJewelsInStones(self, J: str, S: str) -> int:
+    	return sum(i in J for i in S)
+
+
+
+class Solution:
+    def numJewelsInStones(self, J: str, S: str) -> int:
+    	return sum(S.count(i) for i in J)
+
+
+
+from collections import Counter
+
+class Solution:
+    def numJewelsInStones(self, J: str, S: str) -> int:
+    	return sum(Counter(S)[i] for i in J)
+
+
+
+# 796. Rotate String Easy---------------------------------------
+
+class Solution:
+    def rotateString(self, s: str, goal: str) -> bool:
+        if s == goal:
+            return True
+        if len(s) != len(goal):
+            return False
+        sub_a = ""
+        for i in range(len(s)):
+            tmp = sub_a + s[i]
+            if tmp not in goal:
+                sub_b = s[i::]
+                break
+            else:
+                sub_a += s[i]
+                
+        return True if sub_b in goal else False
+
+class Solution:
+    def rotateString(self, s: str, goal: str) -> bool:
+        return len(s) == len(goal) and goal in s+s        
+
+
 # num_title Easy Medium---------------------------------------
 
 
@@ -3826,3 +4690,7 @@ class Solution:
 # num_title Easy Medium---------------------------------------
 # num_title Easy Medium---------------------------------------
 # num_title Easy Medium---------------------------------------
+
+
+
+

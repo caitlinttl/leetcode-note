@@ -415,6 +415,263 @@ class Solution:
                 num_map[nums[i]] = i # key是num的值, i是nums的index
 
 
+# Tree
+# https://turingplanet.org/2020/03/17/%e6%a0%91tree-%e4%ba%8c%e5%88%86%e6%9f%a5%e6%89%be%e6%a0%91binary-search-tree%e3%80%8c%e6%95%b0%e6%8d%ae%e7%bb%93%e6%9e%84%e5%92%8c%e7%ae%97%e6%b3%957%e3%80%8d/
+# Binary search tree 二分查找樹 (BST)
+# Tree traversal 遍歷
+# - 前序遍歷 Preorder Traversal 自己左右 (先訪問自己, 然後訪問左孩子, 再訪問右孩子) Top -> Bottom, left -> right
+# - 中序遍歷 Inorder Traversal 左自己右 (先訪問左孩子, 再訪問自己, 再訪問右孩子) left -> node -> right
+# - 後序遍歷 Postorder Traversal 左右自己 (先訪問左右孩子, 再訪問自己)  Bottom -> Top, left -> right
+
+""" 
+Tree
+
+頭(root)
+尾(leaf)
+node之間相連的線，叫做edge
+Height(到尾): 節點到尾節點之間 edge的數量
+Depth(到頭): 節點到root之間 edge的數量
+
+樹的分類:
+- 二叉樹（Binary Tree）：每個節點最多含有兩個子樹，上面的圖標就是二叉樹。
+- 排序二叉樹（Binary Search Tree）：在此樹中，每個節點的分數比左子樹上的每個節點都大，比所有右子樹上的節點都小。
+- 完全二叉樹（Complete Binary Tree）：假設一個完整的二叉樹深度（深度）為d（d > 1），除了第d層外，其他層的不同數量均已達到完整的結果，且第d層所有節點從左方向右樹就是這樣排列，這樣的二叉樹完全是二叉樹。
+- 滿二叉樹（Full Binary Tee）：在滿二叉樹中，每個不是尾節點的節點有兩個子節點。
+- 平衡二叉樹（AVL Tree）：任何節點的兩顆子樹的高度差不大於1的二叉樹。
+- B樹（B-Tree）：B樹和平衡二樹一樣，它是一種多叉樹（一個插節點的節點數量可以超過二）。
+- 紅黑樹（Red—Black Tree）：是一種自平衡二叉樹。
+
+BST裡面不能存在相同value的節點
+
+"""
+
+
+# 94. Binary Tree Inorder Traversal Easy---------------------------------------
+# Tree
+# inorder 左 自己 右
+# https://blog.csdn.net/fuxuemingzhu/article/details/79294461
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class Solution:
+    def inorderTraversal(self, root: Optional[TreeNode]) -> List[int]:
+        ans = []
+        def inorder(root):
+            if root == None:
+                return None
+
+            if root.left != None:     # 左
+                inorder(root.left)
+
+            ans.append(root.val)      # 自己
+
+            if root.right != None:    # 右
+                inorder(root.right)
+        
+        inorder(root)
+        return ans
+
+class Solution:
+    def preorderTraversal(self, root: Optional[TreeNode]) -> List[int]:
+        ans = []
+        def inorder(root):
+            if root == None:
+                return None
+
+            ans.append(root.val)      # 自己
+                
+            if root.left != None:     # 左
+                inorder(root.left)
+            
+            if root.right != None:    # 右
+                inorder(root.right)
+        
+        inorder(root)
+        return ans
+
+class Solution:
+    def postorderTraversal(self, root: Optional[TreeNode]) -> List[int]:
+        ans = []
+        def inorder(root):
+            if root == None:
+                return None
+            if root.left != None:     # 左
+                inorder(root.left)
+            
+            if root.right != None:    # 右
+                inorder(root.right)
+            
+            ans.append(root.val)      # 自己
+        
+        inorder(root)
+        return ans
+
+        
+"""
+
+root = [1,null,2,3]
+TreeNode{val: 1, left: None, right: TreeNode{val: 2, left: TreeNode{val: 3, left: None, right: None}, right: None}}
+inorder: [1,3,2]
+preorder: [1,2,3]
+postorder: [3,2,1]
+
+"""
+
+
+# 101. Symmetric Tree Easy---------------------------------------
+# 判斷樹是否對稱
+
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class Solution:
+    def isSymmetric(self, root: Optional[TreeNode]) -> bool:
+        if root == None: # root 為空, return True
+            return True
+        else:
+            return self.isSymmetricTree(root.left, root.right) #root 不為空, 往下看, 傳入root的左子樹和右子樹
+        
+    def isSymmetricTree(self, left, right):
+        if left == None or right == None: # 左右子樹有其中一個為空
+            return True if left == right else False # 如果左右子樹都為空為True, 如果一個空一個不空為False
+        if left.val != right.val: #左右子樹都不為空, 那比左右子樹的值, 值如果不同為False
+            return False
+        # 左右子樹的值相同, 繼續往下比, recusion自己, 傳入邊緣情況與中間情況
+        edge = self.isSymmetricTree(left.left, right.right) # 傳入邊緣(左的左 和 右的右比)
+        center = self.isSymmetricTree(left.right, right.left) # 中間情況(左的右 和 右的左比)
+        if edge == True and center == True: # 如果邊緣和中間都是True, 則為True
+            return True
+        
+TreeNode{val: 1, left: TreeNode{val: 2, left: None, right: TreeNode{val: 3, left: None, right: None}}, right: TreeNode{val: 2, left: None, right: TreeNode{val: 3, left: None, right: None}}}
+            
+root = [1,2,2,null,3,null,3]
+        
+
+
+# 104. Maximum Depth of Binary Tree Easy---------------------------------------
+
+# 問的是tree的層數, 所以要加一(加自己)
+# DFS
+""" 
+-DFS思路
+- 利用pre-order (node, L, R)
+- 先看node是不是空 是空的話 那return 0 (base case)
+- 不是的話 那就往左往右看下去找到最深的pth因為雨分樹有雨條路 所以要比較
+左邊右邊找出比較深的那條路 找到之後 也要把自己算進去所以pth的深度在加1
+ """
+
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class Solution:
+    def maxDepth(self, root: Optional[TreeNode]) -> int:
+        if root == None:
+            return 0
+        return 1 + max(self.maxDepth(root.left), self.maxDepth(root.right))
 
 
 
+
+# 108. Convert Sorted Array to Binary Search Tree Easy---------------------------------------
+""" 
+因此採用二元搜尋來產生二元搜索樹,
+首先將該陣列的中間值作為整個樹的根結點,
+採用遞迴分別建立左右節點 
+
+https://desolve.medium.com/%E5%BE%9Eleetcode%E5%AD%B8%E6%BC%94%E7%AE%97%E6%B3%95-35-bst-3-b1f225f39aa3
+
+"""
+
+
+""" 
+
+1. 檢查陣列是否是空的或者null，是的話直接回傳
+2. 呼叫一個用來遞迴建立BST的函式，這邊命名成getNode()
+3. getNode會輸入陣列以及當下的左右邊界(nums, l, r)
+(一開始l = 0, r = N-1, N是nums的總數)
+4. 每次先檢查左右邊界是否黃金交叉(表示已經完成了，可以回傳null)
+5. 讓mid = l加r的一半，直接建立一個root節點
+6. root節點的左節點就應該是呼叫getNode(nums, l, mid-1)得到的結果
+7. root節點的右節點則會是getNode(nums, mid+1, r)得到的結果
+8. 回傳root
+我們可以看到每次會抓中間值產生一個節點，再利用已排序的特性，
+繼續進入遞迴往下將左邊和右邊的節點處理完畢。
+思考它的執行流程，應該會發現總體而言我們會先一路來到最左邊的節點，
+再回頭建立每個遞迴函式的右邊節點；
+也就是說，程式執行的優先順序是先往深處的方向走而非先將這一層的狀況處理完，這種模式我們稱之為深度優先搜尋(Depth-First Search, DFS)；
+ """
+
+class Solution:
+    def sortedArrayToBST(self, nums: List[int]) -> Optional[TreeNode]:
+        if nums == None or len(nums) == 0:
+            return None
+        return self.getNode(nums, 0, len(nums) -1)
+
+    def getNode(self, nums: List[int], left:int, right:int):
+        if left > right:
+            return None
+        mid = (left + right) // 2
+        root = TreeNode(nums[mid])
+        root.left = self.getNode(nums, left, mid-1)
+        root.right = self.getNode(nums, mid+1, right)
+        return root
+
+
+
+""" 
+
+PriorityQueue 優先對列
+Heap 堆
+https://turingplanet.org/2020/03/07/%e4%bc%98%e5%85%88%e9%98%9f%e5%88%97-priorityqueue/
+
+幫助我們以最快的速度O(1)獲取優先級最高的元素。
+
+PriorityQueue 優先對列
+push：插入一個新的元素  O(n)
+pop：將優先級最高的元素彈出（刪除） O(1)
+peek：查看優先級最高的值 O(1)
+
+
+堆Heap
+堆（Heap）是一種特殊的平衡二叉樹，堆中的節點滿足以下的條件：一個節點的父節點優先級比自己高，而自己的子節點優先級比自己底。優先級可以根據數值的大小來決定。最常見的堆有以下兩種類型：
+
+最大堆（Max Heap）：最大堆中根節點數值最大，所有父節點的數值比各自的子節點數值大。
+最小堆（Min Heap）：根節點數值最小， 父節點數值比其子節點數值小。
+add: 將新元素插入堆
+poll: 將根節點（數值最大的元素）刪除
+peek: 獲取根節點的數值
+
+
+ """
+
+
+ """ 
+
+ Graph 圖
+https://turingplanet.org/2020/04/02/%e5%9b%begraph%e3%80%8c%e7%ae%97%e6%b3%95%e5%92%8c%e6%95%b0%e6%8d%ae%e7%bb%93%e6%9e%849%e3%80%8d/
+
+
+1. 向圖（Undirected Graph）：和其他無直接連接的圖）。
+2. 有向圖（DirectGraph）：有向圖的連線是有方向的。
+3. 權重圖（Weighted Graph）：在重圖中，每條線都有各自的權重。
+
+ DFS
+ BFS
+
+ 圖的遍歷（Graph Traversal）
+ 深度優先搜索（Depth-First Search）
+ 廣度優先搜索（Breadth-First Search）
+ 
+  """
+
+# 頂點 vertice
+# 相連線 edge
