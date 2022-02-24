@@ -4678,19 +4678,399 @@ class Solution:
         return len(s) == len(goal) and goal in s+s        
 
 
+# 859. Buddy Strings Easy---------------------------------------
+
+class Solution:
+    def buddyStrings(self, s: str, goal: str) -> bool:
+        if len(s) != len(goal): # 長度不同 False
+            return False 
+
+        if s == goal: # 一樣的字串
+            if len(s) == len(set(s)): # 如果字串裡沒有重複的字 False
+                return False
+            else:
+                return True # 有重複(可以交換還是一樣) True
+
+        # 字串不同
+        s_enum = dict(enumerate(s))
+        g_enum = dict(enumerate(goal))
+
+        diff = []
+        for i in range(len(s)):
+            if s_enum[i] != g_enum[i]:
+                diff.append(i)
+
+        if len(diff) != 2: # 只有兩個不同
+            return False
+        else:
+            s_enum[diff[0]], s_enum[diff[1]] =  s_enum[diff[1]], s_enum[diff[0]]
+                
+
+        # print(s_enum, g_enum)
+
+        # 如果交換後相同
+        return True if s_enum == g_enum else False        
+
+
+
+
+
+
+# Check if One String Swap Can Make Strings Equal Easy---------------------------------------
+
+class Solution:
+    def areAlmostEqual(self, s1: str, s2: str) -> bool:
+        if s1 == s2:
+            return True
+        else:
+            s1e = dict(enumerate(s1))
+            s2e = dict(enumerate(s2))
+            diff = []
+            for i in range(len(s1)):
+                if s1e[i] != s2e[i]:
+                    diff.append(i)
+            if len(diff) != 2:
+                return False
+            else:
+                s1e[diff[0]], s1e[diff[1]] = s1e[diff[1]], s1e[diff[0]]
+            
+            return True if s1e == s2e else False
+        
+
+# 1695. Maximum Erasure Value Medium---------------------------------------
+# Sliding Window 
+# openbook
+
+
+# 62 / 62 test cases passed, but took too long.
+# Time Limit Exceeded
+
+class Solution(object):
+    def maximumUniqueSubarray(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: int
+        """
+        res = []
+        max_score = 0
+        for i in range(len(nums)):
+            if not nums[i] in res:
+                res.append(nums[i])
+            else:
+                index_i = res.index(nums[i])
+                res = res[index_i+1::]
+                res.append(nums[i])
+                
+            max_score = max(max_score, sum(res)) # repeat calcular the sum take too much time !!
+
+            
+        return max_score
+        
+# also TLE time limit exceeded
+class Solution(object):
+    def maximumUniqueSubarray(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: int
+        """
+        res = []
+        max_score = 0
+        cur_sum = 0
+        for i in nums:
+            if i in res:
+                index_i = res.index(i)
+                res = res[index_i+1:]
+                cur_sum = sum(res) # should avoid use sum
+
+            res.append(i)
+            cur_sum += i
+            max_score = max(max_score, cur_sum)
+            
+        return max_score
+
+
+# Sliding Window 
+# TC: O(n)
+class Solution(object):
+    def maximumUniqueSubarray(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: int
+        """
+        # res = []
+        max_score = 0
+        seen = set() # key point !!
+        cur = 0
+        head = 0 # key point !!
+
+        for i in range(len(nums)):
+            while nums[i] in seen:
+                cur -= nums[head] 
+                seen.remove(nums[head])
+                head += 1 # 移動head (左邊邊界)
+
+            cur += nums[i]
+            seen.add(nums[i])
+            max_score = max(max_score, cur)
+
+            
+        return max_score
+        
+
+
+nums = [4,2,4,5,6]
+nums = [5,2,1,2,5,2,1,2,5]
+nums = [5,5,5,5,1,2,34,4,5,6,4]
+ans = Solution().maximumUniqueSubarray(nums)
+print(ans)
+
+
+
+# 3. Longest Substring Without Repeating Characters Medium---------------------------------------
+
+# Sliding Window 
+# openbook
+
+class Solution(object):
+    def lengthOfLongestSubstring(self, s):
+        """
+        :type s: str
+        :rtype: int
+        """
+        ans = []
+        max_len = 0
+        for i in s:
+            if i in ans:
+                ans = ans[ans.index(i)+1:]
+            ans.append(i)
+            max_len = max(max_len, len(ans))
+            
+        return max_len
+
+
+
+# 821. Shortest Distance to a Character Easy---------------------------------------
+
+class Solution(object):
+    def shortestToChar(self, s, c):
+        """
+        :type s: str
+        :type c: str
+        :rtype: List[int]
+        """
+        ans = []
+        for i in range(len(s)):
+            if s[i] == c:
+                ans.append(0)
+            else:
+                dist_f = dist_b = len(s) + 1
+                f = b = i
+                while f < len(s) - 1 and s[f] != c: # carefully about the index
+                    f += 1
+                    if s[f] == c:
+                        dist_f = f - i
+                while b > 0 and s[b] != c: # carefully about the index
+                    b -= 1
+                    if s[b] == c:
+                        dist_b = i - b
+                ans.append(min(dist_b, dist_f))
+            
+        return ans
+                        
+                
+        
+
+
+# 674. Longest Continuous Increasing Subsequence Easy---------------------------------------
+class Solution(object):
+    def findLengthOfLCIS(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: int
+        """
+        ans = 1
+        tmp = 1
+        for i in range(len(nums)-1):
+            if nums[i+1] > nums[i]:
+                tmp += 1
+            else:
+                ans = max(ans, tmp)
+                tmp = 1
+                
+        ans = max(ans, tmp) # 如果nums都是持續遞增, 會更新不到ans, 所以要補這一行
+                
+        return ans
+            
+        
+        
+
+
+
+
+# 781. Rabbits in Forest Medium---------------------------------------
+
+class Solution:
+    def numRabbits(self, answers):
+        count_dict = Counter(answers)
+        # print(count_dict)
+        ans = 0
+        for n, c in count_dict.items():
+            if c % (n+1) == 0:
+                group = (c // (n+1))
+            else:
+                group = (c // (n+1)) + 1 # carefully!
+
+            ans += (n+1) * group
+        return ans
+
+
+
+# 783. Minimum Distance Between BST Nodes Easy---------------------------------------
+
+
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+
+
+# 錯誤的方法, 這個做法應該是算出"相接"的兩個node的最小差異
+# 但題目是要 any two different nodes"任意兩個node"的差異
+class Solution:
+    def minDiffInBST(self, root: Optional[TreeNode]) -> int:
+        ans = float('inf')
+        
+        def findDiff(root, ans):
+            print(root)
+            left_diff = right_diff = float('inf')
+            if root.left != None:
+                left_diff = root.val - root.left.val
+                print(left_diff)
+                ans = findDiff(root.left, ans)
+            if root.right != None:
+                right_diff = root.right.val - root.val
+                print(right_diff)
+                ans = findDiff(root.right, ans)
+            
+            
+            ans = min(ans, left_diff, right_diff)
+            return ans
+            
+        ans = findDiff(root, ans)
+            
+        return ans
+
+
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+
+# 這個才是any two different nodes"任意兩個node"的差異
+class Solution:
+    def minDiffInBST(self, root: Optional[TreeNode]) -> int:
+        val_list = []
+        
+        def inorder(root):
+            
+            if root == None:
+                return
+            if root.left != None:
+                inorder(root.left)
+                
+            val_list.append(root.val)
+                
+            if root.right != None:
+                inorder(root.right)    
+
+        inorder(root)
+        
+        print(val_list)
+        diff = float('inf')
+        # 不需要去減前面的啊!!已經排序好了, 去減前面的一定更大!
+        # for i in range(len(val_list)-1):
+        #     for j in range(i+1,len(val_list)):
+        #         cur = val_list[j] - val_list[i]
+        #         diff = min(diff, cur)
+
+        for i in range(len(val_list)-1):
+            if val_list[i+1]-val_list[i] < diff:
+                diff = val_list[i+1]-val_list[i]
+                
+        return diff
+                
+        
+
+# 819. Most Common Word Easy---------------------------------------
+
+class Solution:
+    def mostCommonWord(self, paragraph: str, banned: List[str]) -> str:
+        paragraph = paragraph.lower()
+        symbols = ["!","?","'",",",";","."," "]
+        for s in symbols:
+            if s in paragraph:
+                paragraph = paragraph.replace(s, ' ')
+        # print(paragraph)
+        
+        list_p = paragraph.split(' ')
+        # print(list_p)                
+        
+        counter = Counter(list_p)
+        ans_c = 0
+        for w, c in counter.items():
+            if w not in banned and w != '':
+                if c > ans_c:
+                    ans_c = c
+                    ans = w
+                    
+        return ans
+            
+        
+# 2144. Minimum Cost of Buying Candies With Discount Easy---------------------------------------
+
+class Solution:
+    def minimumCost(self, cost: List[int]) -> int:
+        cost = sorted(cost, reverse=True)
+        ans = 0
+        for i in range(len(cost)):
+            if (i+1) % 3 != 0:
+                ans += cost[i]
+                
+        return ans
+
+
+# 2148. Count Elements With Strictly Smaller and Greater Elements Easy---------------------------------------
+
+class Solution:
+    def countElements(self, nums: List[int]) -> int:
+        if len(set(nums)) < 3: # remember to use "set"
+            return 0
+        return len(nums) - nums.count(min(nums)) - nums.count(max(nums))
+        
+
+
+
+
+
+
+# num_title Easy Medium---------------------------------------
+# num_title Easy Medium---------------------------------------
+# num_title Easy Medium---------------------------------------
+# num_title Easy Medium---------------------------------------
 # num_title Easy Medium---------------------------------------
 
 
 
 
-# num_title Easy Medium---------------------------------------
-# num_title Easy Medium---------------------------------------
-# num_title Easy Medium---------------------------------------
-# num_title Easy Medium---------------------------------------
-# num_title Easy Medium---------------------------------------
-# num_title Easy Medium---------------------------------------
-# num_title Easy Medium---------------------------------------
 
-
+# num_title Easy Medium---------------------------------------
+# num_title Easy Medium---------------------------------------
+# num_title Easy Medium---------------------------------------
+# num_title Easy Medium---------------------------------------
+# num_title Easy Medium---------------------------------------
 
 

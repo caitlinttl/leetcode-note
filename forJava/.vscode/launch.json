@@ -5,11 +5,10 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Python: 目前檔案",
-            "type": "python",
+            "type": "java",
+            "name": "Launch Current File",
             "request": "launch",
-            "program": "${file}",
-            "console": "integratedTerminal"
-        }
+            "mainClass": "${file}"
+        },
     ]
 }
