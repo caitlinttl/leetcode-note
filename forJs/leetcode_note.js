@@ -26,6 +26,22 @@
     }
 };
 
+// use map
+var twoSum = function(nums, target) {
+
+    var ans = []
+    var seen = new Map()
+    for (i = 0; i < nums.length; i++) {
+        var diff = target -  nums[i]
+        if (seen.has(diff)) {
+            ans.push(seen.get(diff), i)
+            return ans
+        }
+        seen.set(nums[i], i)
+    }
+
+};
+
 
 
 console.log("-----test js-----")
