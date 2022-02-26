@@ -452,6 +452,7 @@ var jsonText = '{ "employees" : [' +
 
 
 
+// array 操作
 var fruits = ['Apple', 'Banana'];
 
 // 在陣列中尋找項目的索引indexOf
@@ -628,3 +629,578 @@ var player2 = new Player("Cat");
 player2.fight();
 player2.reset();
 player2.report();
+
+
+
+// =====================================================================================================
+// *****Array 操作
+// =====================================================================================================
+
+Array.isArray(obj)                      // 檢驗是否為陣列
+const arrCopy = [...arr]                // 複製陣列（copy array）@ airbnb 4.3
+const nodes = [...arrayLike]            // 將 array-like（例如 NodeList） 轉成 array @ airbnb 4.4
+
+/**
+ * 建立陣列
+ **/
+let arr = [element0, element1, ..., elementN]        /* Good */
+let arr = new Array(element0, element1[, ...[, elementN]])  /* Bad  */
+let arr = new Array(arrayLength)
+
+/**
+ * 原陣列不會被改變 (non-mutating) 而是回傳新陣列
+**/
+arr.at(-1)        // 取出陣列的最後一個元素，可以用來替換 arr[arr.length-1] 的寫法
+arr.map( callback<element> )                  // 用來將陣列中的元素做轉換（computed），搭配 return
+arr.forEach( callback<item, index, array> )   // 用來疊代陣列中的元素，並執行動作，不需搭配 return
+arr.slice(begin, end)                         // 用來擷取陣列中的部分元素（不包含 end）
+arr.filter( callback<item, index, array> )    // 若 callback return 為 true 時則保留該元素
+arr.reduce( callback<accumulator, currentValue, currentIndex, array>, initialValue )  // 搭配 return ，return 的內容會進到 accumulator，最後回傳 accumulator
+arr.join('<str>')                            // 將陣列以 <str> 連接成字串，預設是","
+
+// 根據 callback 的規則篩選，需在 callback 中搭配 return 使用
+arr.some( callback<item, index, array> )      // 檢驗陣列中是否有符合該 callback 規則的元素，有的話回傳 true
+arr.every( callback<item, index, array> )     // 檢驗陣列中所有元素是否都符合 callback 規則，有的話回傳 true
+arr.find( callback<item, index, array> )      // 檢驗陣列中是否有符合該 callback 規則的元素，有的話回傳第一個找到的元素值
+arr.findIndex( callback<item, index, array> ) // 檢驗陣列中是否有符合該 callback 規則的元素，有的話回傳第一個找到的 index
+
+// 根據 target 篩選
+arr.includes(target, fromIndex)               // 檢驗陣列中是否包含 target 這個 element，有的話回傳 true
+arr.indexOf( target, fromIndex )              // 返回找到該元素的第一個 index 值，若找不到則回傳 -1
+
+/**
+ * 原陣列會被改變(mutation method)
+**/
+arr.pop()                                     // 刪除最後一個元素
+arr.push()                                    // 將元素塞入陣列中
+arr.shift()                                   // 刪除陣列中第一個元素
+arr.unshift()                                 // 將元素插入到陣列中第一個
+arr.splice(start, deleteCount, newItem)       // 用來移除陣列中的部分元素，並可補入新元素
+arr.sort(compareFunction)                     // 根據 compareFunction 來將陣列重新排序
+arr.concat(value1, [value2], ...)             // 把陣列連接在一起
+
+
+
+判斷式否為陣列（型別判斷）
+keywords: Array.isArray()
+Array.isArray([]); // true
+Array.isArray([1]); // true
+Array.isArray(new Array()); // true
+
+Array.isArray(); // false
+Array.isArray({}); // false
+Array.isArray(null); // false
+Array.isArray(undefined); // false
+
+
+將 array-like 的 Node List 轉成 Array
+// rails/activestorage/app/javascript/activestorage/helpers.js
+function toArray(value) {
+  if (Array.isArray(value)) {
+    return value;
+  } else if (Array.from) {
+    return Array.from(value);
+  } else {
+    return [].slice.call(value);
+  }
+}
+
+
+從陣列中隨機抽取一個元素（sample element in array）
+var rand = myArray[Math.floor(Math.random() * myArray.length)];
+
+/**
+ * 建立一個長度為 length ，且所有內容均為 'element' 的陣列
+ * create an array with same element in given length
+ **/
+ Array(_length_).fill(_element_);
+ Array(10).fill('ele');
+ // [ 'ele', 'ele', 'ele', 'ele', 'ele', 'ele', 'ele', 'ele', 'ele', 'ele' ]
+
+
+ Array(5)               // [empty × 5]
+[...Array(5)]          // [undefined, undefined, undefined, undefined, undefined]
+[...Array(5).keys()]   // [0, 1, 2, 3, 4]
+
+Array(5).keys()         // Array Iterator {}
+
+
+去除陣列中重複的元素（keep unique element）
+let arr = ['aaron', 'po', 'aaron', 'po', 'chung'];
+let arrKeepUniqueElements = [...new Set(arr)];
+
+
+篩選出最小值
+let minX = arr.reduce((pre, cur) => {
+  return pre.x < cur.x ? pre.x : cur.x;
+});
+
+
+陣列的解構賦值（Array Destructing）
+let [a, b, c] = [1, 2, 3];
+console.log(a, b, c); // 1, 2, 3
+
+let destructing_array = function () {
+    let allPeople = ['Aaron', 'John', 'Andy', 'Hat', 'Candy'];
+    let [a, b, c, ...d] = allPeople;
+    console.log(a, b, c, d); // Aaron John Andy ["Hat", "Candy"]
+  };
+
+  let [a, b, c = 4, d = 'Hello'] = [1, 2, 3];
+console.log(a, b, c, d); // 1, 2, 3, "Hello"
+
+
+let arr = ['Taipei', 'Taiwan', 'Aaron'];
+console.log(arr.length); //  取得陣列元素數目
+
+
+/**
+ * 會改變原本的陣列內容
+ **/
+let arr_pop = arr.pop(); //  用來刪除最後一個元素
+console.log(arr); //  ["Taipei", "Taiwan"]
+console.log(arr_pop); //  'Aaron'
+
+let arr_push = arr.push('Apple'); //  用來將元素塞入陣列中
+console.log(arr); //  ["Taipei", "Taiwan", "Apple"]
+console.log(arr_push); // 3
+
+let arr_shift = arr.shift(); //  刪除第一個元素
+console.log(arr); //  ["Taiwan", "Apple"]
+console.log(arr_shift); //  "Taipei"
+
+
+
+/**
+ * 不會改變原本的陣列內容
+ **/
+let arr_map = arr.map((item) => item + 's'); //  將陣列中的每個元素執行某函式，但不改變原來的 arr
+console.log(arr); //  ["Taipei", "Taiwan", "Apple"]
+console.log(arr_map); //  ["Taipeis", "Taiwans", "Apples"]
+
+// 使用 Array.prototype.slice 來避免改變原陣列
+
+// 為陣列添加元素
+const addElement = (originArray) => {
+    return [...originArray, 0];
+  };
+  
+  // 移除陣列內的元素
+  const removeElement = (originArray, index) => {
+    return [...originArray.slice(0, index), ...originArray.slice(index + 1)];
+  };
+  
+  // 改變陣列內的元素
+  const modifyElement = (originArray, index) => {
+    return [...originArray.slice(0, index), originArray[index] + 1, ...originArray.slice(index + 1)];
+  };
+
+
+// 連結陣列 joining arrays
+const odd = [1, 3, 5];
+const arr_concat = [2, 4, 6].concat(odd);
+const arr_spread = [2, 4, 6, ...odd]; // [2, 4, 6, 1, 3, 5]
+
+// 陣列插值 insert array anywhere
+const arr_insert = [2, 4, ...odd, 6]; // [2, 4, 1, 3, 5, 6]
+
+// 複製陣列 cloning array, copy array, clone array
+const arr = [1, 2, 3, 4];
+const arr2 = [...arr]; // [1, 2, 3, 4]
+
+
+/**
+ *   var new_array = arr.map(callback<item, index, array>)
+ *   需要使用到陣列，並回傳回原陣列時，所以在 callback 中會有 return
+ **/
+ var numbers = [1, 5, 10, 15];
+ var roots = numbers.map(function (x) {
+   return x * 2;
+ });
+ // roots is now [2, 10, 20, 30]
+ // numbers is still [1, 5, 10, 15]
+
+
+ /**
+ *  arr.forEach(callback<currentValue, index, array> [, thisArg]);
+ *  需要使用到陣列，但不需要回傳陣列時使用（根據這個陣列自己做一些事）
+ **/
+
+let people = [
+    { name: 'Aaron', country: 'Taiwan' },
+    { name: 'Jack', country: 'USA' },
+    { name: 'Johnson', country: 'Korea' },
+  ];
+  
+  people.forEach((person) => {
+    console.log(`${person.name} lives in ${person.country}`);
+  });
+  
+  //    特殊簡寫
+  let users = ['Aaron', 'Jack', 'Johnson'];
+  function getUserName(username) {
+    console.log(username);
+  }
+  
+  users.forEach(getUserName);
+  
+  /* 上面這行是下面這段的簡寫
+  users.forEach( user =>{
+      getUserName(user)
+  })
+  */
+
+
+擷取陣列中的部分元素
+
+/**
+ *   arr.slice(),
+ *   arr.slice(begin)
+ *   arr.slice(begin, end)
+ *   slice() 方法將陣列的一部分淺拷貝,
+ *   回傳從 begin 開始到 end 結束（不包括 end）新陣列。
+ *   原始陣列不會被修改。
+ **/
+
+let arr = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 0];
+arr.slice(0, 3); // [0,1,2]
+arr.slice(3, 7); // [3,4,5,6]
+
+// 最後一個是 -1
+arr.slice(-3, -1); // [8,9]
+arr.slice(-5, -3); // [6,7]
+arr.slice(-3, -5); // []
+
+// 如果要擷取到最後一個
+arr.slice(-5, arr.length); // [6,7,8,9,0]
+
+
+
+移除陣列元素（並放入新陣列元素） 
+注意事項：splice( ) 的用法會改變原陣列結構，且原本的 arr 和 arrSplice 會輸出不同內容。
+
+/**
+ *  array.splice(start)
+ *  array.splice(start, deleteCount)
+ *  array.splice(start, deleteCount, item1, item2, ...)
+ *
+ *  deleteCount：要移除的陣列個數，省略表示 arr.length - start
+ *  item1, item2：可用來從 start 添加陣列
+ **/
+
+ arr = [1, 3, 5, 6];
+ arr_splice = arr.splice(2, 1); //  表示把第 2 個元素從陣列中移除
+ console.log(arr); //  保留下來的元素，回傳 [1, 3, 6]
+ console.log(arr_splice); //  被移除掉的元素，回傳 [5]
+ arr_splice = arr.splice(2, 1, 'new'); //  把第 2 個元素從陣列移除，並放進新元素"new"
+
+
+
+排序
+/**
+ *    arr.sort(compareFunction)
+ *    會改變原陣列
+ **/
+
+ arr = [4, 6, 3, 3, 6, 8, 12];
+
+ function compareNumbers(a, b) {
+   // console.log(a, b)
+   return a - b; // 由小排到大
+   // return b - a   // 由大排到小
+ }
+ arr.sort(compareNumbers);
+ console.log(arr); //    [3, 3, 4, 6, 6, 8, 12]
+
+
+/**
+ * 根據屬性值排序，但是屬性值不能有空的情況
+ **/
+
+var arr = [
+{ name: 'Edward', value: 21 },
+{ name: 'Sharpe', value: 37 },
+];
+
+function compareObj(a, b) {
+return a.value - b.value;
+}
+arr.sort(compareObj);
+console.log(arr);
+
+
+/**
+ *  arr.filter(callback<element, index, array> [, thisArg])
+ *  若回傳值為true則將當前的元素保留; 若是false，則刪除該元素。
+ **/
+
+//  把所有小於 10 的資料都移除
+function isBigEnough(value) {
+    return value >= 10;
+  }
+  var filtered = [12, 5, 8, 130, 44].filter(isBigEnough); // filtered is [12, 130, 44]
+
+
+/**
+ *   arr.indexOf(searchElement[, fromIndex = 0])
+ *   indexOf() 方法返回在數組中可以找到給定元素的第一個索引，如果不存在，則返回-1
+ **/
+
+
+
+/**
+ * 用來檢驗陣列中是否包含某規則的元素
+ * 會針對陣列中的每個元素去執行 some 裡面的 callback ，如果有 true 就停止，沒有就到最後回傳 false
+ * arr.some(callback<element, index, array> [, thisArg] )
+ */
+
+ function isBiggerThan10(element, index, array) {
+    return element > 10;
+  }
+  
+  [2, 5, 8, 1, 4].some(isBiggerThan10); // false
+  [12, 5, 8, 1, 4].some(isBiggerThan10); // true
+
+
+  /**
+ * 建議要給起始值
+ * arr.reduce( callback<accumulator, currentValue, currentIndex, array>, initialValue )
+ * 搭配 return 使用，return 的內容會傳到 accumulator
+ **/
+
+// 基本使用
+let arr = [0, 1, 2, 3, 4];
+
+let arrAfterReduce = arr.reduce((accumulator, item, currentIndex) => {
+  return accumulator + item; // return 的值會進入 accumulator
+}, 0);
+
+console.log('afterReduce ' + arrAfterReduce); // 10
+
+// 可以用來篩選陣列小值
+let minX = arr.reduce((pre, cur) => {
+  return pre.x < cur.x ? pre.x : cur.x;
+});
+
+
+/* 取得陣列中放在物件裡的值 */
+let arr = [{ name: 'A' }, { name: 'B' }, { name: 'C' }];
+
+let sum = arr.reduce((acc, cur, i, arr) => {
+  /* 使用 push */
+  acc.push(cur.name); // 回傳陣列長度
+  return acc; // 原陣列改變
+
+  /* 使用 concat */
+  // return acc.concat(cur.name)    // 回傳連結後的陣列
+}, []);
+
+console.log(sum); // [ 'A', 'B', 'C' ]
+
+/**
+ * 用來將陣列連接起來
+ * arr.concat(value1 [, value2])
+ * 和 push 有一個差異是在 push 會改變原本的陣列，
+ * 但是 concat 不會改變原本的陣列
+ **/
+
+ let arr = [1, 2, 3];
+ let arrAppend = [4, 5, 6];
+ arr.concat(7, arrAppend); // [1, 2, 3, 7, 4, 5, 6]，arr 不會改變
+
+fill
+ 建立一個長度為 length ，且所有內容均為 'element' 的陣列（Create an array with the same element）
+
+ /**
+ * Array(<length>).fill(<element>)
+ **/
+Array(3).fill(4); // [4, 4, 4]
+
+
+// good
+const arr = [
+    [0, 1],
+    [2, 3],
+    [4, 5],
+  ];
+  
+  const objectInArray = [
+    {
+      id: 1,
+    },
+    {
+      id: 2,
+    },
+  ];
+  
+  const numberInArray = [1, 2];
+
+
+
+// =====================================================================================================
+// *****Map 操作
+// =====================================================================================================
+
+/* 
+Map 物件是簡單的 key-value 配對，物件（Object）和 Map 很相似，但是有以下幾點差別：
+
+Map 裡面的 key 是唯一的，如果 set 到重複的 key，則舊的 value 會被覆蓋。
+Map 中的 keys 會根據被添加資料的時間而有順序性，但 Object 沒有順序性。
+Object 的鍵（key）只能是 字串（Strings）或 Symbols，而 Map 的鍵可以是任何值，包含物件、函式或原始型別（primitive type）。
+若要取得 Map 的大小非常容易，只需要取得 size 屬性即可；而 Object 的大小必須手動決定。
+當需要經常增添刪減屬性時，使用 Map 的效能會比 Object 來得好。
+*/
+
+
+ES6 中如果希望「陣列（Array）」的元素不會重複，可以使用 Set；如果是希望物件（Object）的鍵不會重複，則可以使用 Map。
+
+// 建立 Map
+let myMap = new Map(); // 建立空的 Map
+let myMap = new Map([
+  [1, 'one'],
+  [2, 'two'],
+]); // 建立 Map 時直接代入內容
+
+let keyString = 'a string',
+  keyObj = {},
+  keyFunc = function () {};
+
+// 透過 .set(key, value) 來在 Map 中添加屬性
+myMap.set(keyString, 'value associated with string');
+myMap.set(keyObj, 'value associated with object');
+myMap.set(keyFunc, 'value associated with function');
+
+// 方法
+myMap.has(keyString); // true，透過 .has 判斷該 Map 中是否有某一屬性
+myMap.size; //  3，透過 .size 來取得 Map 內的屬性數目
+myMap.get(keyString); // 使用 .get(key) 可取得屬性的內容
+myMap.delete(keyString); // 刪除 Map 中的某個屬性，成功刪除回傳 true，否則 false
+myMap.clear(); // 清空整個 Map
+
+
+myMap.keys(); // 取得 Map 的所有 keys，回傳 Iterable 的物件
+myMap.values(); // 取得 Map 的所有 values，回傳 Iterable 的物件
+myMap.entires(); // 取得 Map 的所有內容，回傳 Iterable 的物件
+
+
+// 透過 for...of 可以列舉所有 Map 中的內容
+for (let [key, value] of myMap) {
+    console.log(`The value of ${key} in Map is ${value}`);
+  }
+  
+  for (let [key, value] of myMap.entries()) {
+    console.log(key + ' = ' + value);
+  }
+  
+  myMap.forEach(function (value, key) {
+    console.log(key + ' = ' + value);
+  });
+  
+  // 取得 Map 的 key
+  for (let key of myMap.keys()) {
+    console.log(key);
+  }
+  
+  // 取得 Map 的所有 values
+  for (let value of myMap.values()) {
+    console.log(value);
+  }
+
+
+  let students = {
+    Aaron: { age: '29', country: 'Taiwan' },
+    Jack: { age: '26', country: 'USA' },
+    Johnson: { age: '32', country: 'Korea' },
+  };
+  
+  const studentMap = new Map(Object.entries(students));
+  const cloneMap = new Map(studentMap);
+  
+  cloneMap.get('Aaron'); // { age: '29', country: 'Taiwan' }
+  studentMap === cloneMap; // false. Useful for shallow comparison
+
+
+// Map 的合併（Merge）
+  var first = new Map([
+    [1, 'one'],
+    [2, 'two'],
+    [3, 'three'],
+  ]);
+  
+  var second = new Map([
+    [1, 'uno'],
+    [2, 'dos'],
+  ]);
+  
+  // 合併兩個 Map 時，後面的 Key 會覆蓋調前面的
+  // 透過 Spread operator 可以將 Map 轉換成陣列
+  var merged = new Map([...first, ...second]);
+  
+  console.log(merged.get(1)); // uno
+  console.log(merged.get(2)); // dos
+  console.log(merged.get(3)); // three
+
+
+
+// Map 也可以和陣列相合併
+// Merge maps with an array. The last repeated key wins.
+var merged = new Map([...first, ...second, [1, 'foo']]);
+
+console.log(merged.get(1)); // foo
+console.log(merged.get(2)); // dos
+console.log(merged.get(3)); // three
+
+
+let students = {
+    Aaron: { age: '29', country: 'Taiwan' },
+    Jack: { age: '26', country: 'USA' },
+    Johnson: { age: '32', country: 'Korea' },
+  };
+  
+  const studentMap = new Map(Object.entries(students));
+  
+  // 透過 for...of 可以列舉所有 Map 中的內容
+  for (let [key, value] of studentMap) {
+    const { age, country } = value;
+    console.log(`${key} is ${age} year's old, and lives in ${country}`);
+  }
+  
+  //  檢驗某個鍵是否存在
+  studentMap.has('Aaron');
+  
+  console.log(studentMap.get('Jack')); // 取得 Map 的屬性內容，Object { age: '26', country: 'USA' }
+  studentMap.delete('Johnson'); // 刪除 Map 中的某個屬性
+  studentMap.clear(); // 清空整個 Map
+  
+  console.log(studentMap.size); // 看看 Map 中有多少內容
+
+
+//   將 Map 轉成 Array
+const theMap = new Map([
+    [1, 'one'],
+    [2, 'two'],
+    [3, 'three'],
+  ]);
+  
+  const theArray = [...theMap.entries()]; // [[1, 'one'], [2, 'two'], [3, 'three']]
+  const arrayOfMapKeys = [...theMap.keys()]; // [1, 2, 3]
+  const arrayOfMapValues = [...theMap.values()]; // ["one", "two", "three"]
+
+
+
+// 使用 Map 製作 HashTable
+// object 也可以使用
+const arr = ['apple', 'apple', 'banana', 'banana', 'cat', 'dog', 'fat', 'fat', 'fat', 'fat'];
+
+const hashTable = new Map();
+
+arr.forEach((item) => {
+  if (hashTable.has(item)) {
+    hashTable.set(item, hashTable.get(item) + 1);
+  } else {
+    hashTable.set(item, 1);
+  }
+});
+
+// Map { 'apple' => 2, 'banana' => 2, 'cat' => 1, 'dog' => 1, 'fat' => 4 }
+console.log(hashTable);

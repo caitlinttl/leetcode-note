@@ -368,3 +368,128 @@ public class java_note {
         }    
     }
 }
+
+
+// =====================================================================================================
+// *****ArrayList 方法
+// =====================================================================================================
+
+/* 
+Java ArrayList 方法
+Java ArrayList 常用方法列表如下：
+
+方法	描述
+add()	将元素插入到指定位置的 arraylist 中
+addAll()	添加集合中的所有元素到 arraylist 中
+clear()	删除 arraylist 中的所有元素
+clone()	复制一份 arraylist
+contains()	判断元素是否在 arraylist
+get()	通过索引值获取 arraylist 中的元素
+indexOf()	返回 arraylist 中元素的索引值
+removeAll()	删除存在于指定集合中的 arraylist 里的所有元素
+remove()	删除 arraylist 里的单个元素
+size()	返回 arraylist 里元素数量
+isEmpty()	判断 arraylist 是否为空
+subList()	截取部分 arraylist 的元素
+set()	替换 arraylist 中指定索引的元素
+sort()	对 arraylist 元素进行排序
+toArray()	将 arraylist 转换为数组
+toString()	将 arraylist 转换为字符串
+ensureCapacity()	设置指定容量大小的 arraylist
+lastIndexOf()	返回指定元素在 arraylist 中最后一次出现的位置
+retainAll()	保留 arraylist 中在指定集合中也存在的那些元素
+containsAll()	查看 arraylist 是否包含指定集合中的所有元素
+trimToSize()	将 arraylist 中的容量调整为数组中的元素个数
+removeRange()	删除 arraylist 中指定索引之间存在的元素
+replaceAll()	将给定的操作内容替换掉数组中每一个元素
+removeIf()	删除所有满足特定条件的 arraylist 元素
+forEach()	遍历 arraylist 中每一个元素并执行特定操作
+
+*/
+
+
+
+/* 
+Java - Array 與 ArrayList 的分別
+
+
+1. 創建方式不同
+Array
+是一個有固定大小的Array。
+每次創建一個新的Array時，都需要為它設定一個大小。
+而且在創建後，是不能再更改大小。
+int arr[] = new int[10]
+
+ArrayList
+是一個有浮動大小的Array。
+每次創建一個新的Array時，不需要為它設定大小。
+因為在創建後，你可以隨意更改它的大小。
+另外，它是List interface的實作。
+ArrayList arrL = new ArrayList();
+
+2. 新增元素及存取元素的方式不同
+Array透過[]的方式新增元素，而ArrayList就透過add()。
+Array透過[]的方式存取元素，而ArrayList就透過get()
+
+3. 資料結構(Data type)的類別不同
+Array 可以包含primitive data types 和object entities。
+ArrayList 只可以包含object entries 但不支持primitive data types。
+
+
+import java.util.ArrayList; 
+import java.util.Arrays; 
+class ArrayTest
+{ 
+    public static void main(String args[]) 
+    { 
+       // 允許primitive data types
+        int[] array = new int[3]; 
+  
+        // 允許 object entities
+        Test[] array1 = new Test[3]; 
+  
+        // 不允許primitive data types
+// 當運行以下一句的code時，會出現error
+        ArrayList<char> arrL = new ArrayList<char>(); 
+  
+        // 允許 object entities
+        ArrayList<Integer> arrL1 = new ArrayList<>(); 
+        ArrayList<String> arrL2 = new ArrayList<>(); 
+        ArrayList<Object> arrL3 = new ArrayList<>(); 
+    } 
+}
+
+*/
+
+// =====================================================================================================
+// *****HashMap 方法
+// =====================================================================================================
+
+/* 
+Java HashMap 方法
+hashmap
+Java HashMap 常用方法列表如下：
+
+方法	描述
+clear()	删除 hashMap 中的所有键/值对
+clone()	复制一份 hashMap
+isEmpty()	判断 hashMap 是否为空
+size()	计算 hashMap 中键/值对的数量
+put()	将键/值对添加到 hashMap 中
+putAll()	将所有键/值对添加到 hashMap 中
+putIfAbsent()	如果 hashMap 中不存在指定的键，则将指定的键/值对插入到 hashMap 中。
+remove()	删除 hashMap 中指定键 key 的映射关系
+containsKey()	检查 hashMap 中是否存在指定的 key 对应的映射关系。
+containsValue()	检查 hashMap 中是否存在指定的 value 对应的映射关系。
+replace()	替换 hashMap 中是指定的 key 对应的 value。
+replaceAll()	将 hashMap 中的所有映射关系替换成给定的函数所执行的结果。
+get()	获取指定 key 对应对 value
+getOrDefault()	获取指定 key 对应对 value，如果找不到 key ，则返回设置的默认值
+forEach()	对 hashMap 中的每个映射执行指定的操作。
+entrySet()	返回 hashMap 中所有映射项的集合集合视图。
+keySet()	返回 hashMap 中所有 key 组成的集合视图。
+values()	返回 hashMap 中存在的所有 value 值。
+merge()	添加键值对到 hashMap 中
+compute()	对 hashMap 中指定 key 的值进行重新计算
+computeIfAbsent()	对 hashMap 中指定 key 的值进行重新计算，如果不存在这个 key，则添加到 hasMap 中
+computeIfPresent()	对 hashMap 中指定 key 的值进行重新计算，前提是该 key 存在于 hashMap 中。*/
