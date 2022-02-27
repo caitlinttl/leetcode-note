@@ -50,9 +50,73 @@ var target = 9
 console.log(twoSum(nums,target))
 
 
-// num_title Easy Medium---------------------------------------
-// num_title Easy Medium---------------------------------------
+// 27. Remove Element Easy---------------------------------------
+/**
+ * @param {number[]} nums
+ * @param {number} val
+ * @return {number}
+ */
+ var removeElement = function(nums, val) {
+    
+    // filter 不會改變原陣列!!
+    var nums = nums.filter(function(value) {
+        return value != val 
+    })   
+    console.log(nums)
+    return nums.length
 
+
+    function removeVal(value) {
+        return value != val
+    }
+   return nums.filter(removeVal).length  
+
+};
+
+ var removeElement = function(nums, val) {
+    
+    while (nums.includes(val)) {
+        nums.splice(nums.indexOf(val), 1)
+        // splice 會改變原陣列
+    }
+    return nums.length
+
+};
+
+var removeElement = function(nums, val) {
+    let pos;
+    while((pos = nums.indexOf(val)) !== -1) {
+        nums.splice(pos,1);
+    }
+    return nums.length;
+
+};
+
+
+// 28. Implement strStr() Easy---------------------------------------
+
+/**
+ * @param {string} haystack
+ * @param {string} needle
+ * @return {number}
+ */
+ var strStr = function(haystack, needle) {
+    if (needle == "") {
+        return 0
+    }
+    if (!haystack.includes(needle)){
+        return -1
+    } else {
+        return haystack.indexOf(needle)
+    }
+   
+};
+
+
+
+// num_title Easy Medium---------------------------------------
+// num_title Easy Medium---------------------------------------
+// num_title Easy Medium---------------------------------------
 
 
 // num_title Easy Medium---------------------------------------

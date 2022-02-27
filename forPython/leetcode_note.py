@@ -5070,9 +5070,32 @@ class Solution:
 
 
 
+# 28. Implement strStr() Easy---------------------------------------
+
+class Solution:
+    def strStr(self, haystack: str, needle: str) -> int:
+        if needle == "":
+            return 0
+        if not needle in haystack:
+            return -1
+        else:
+            return haystack.index(needle)
+        
+
+
+# 27. Remove Element Easy---------------------------------------
+
+class Solution:
+    def removeElement(self, nums: List[int], val: int) -> int:
+        while val in nums:
+            nums.remove(val)
+        return len(nums)
+        
+
 # num_title Easy Medium---------------------------------------
-# num_title Easy Medium---------------------------------------
-# num_title Easy Medium---------------------------------------
+
+
+
 # num_title Easy Medium---------------------------------------
 # num_title Easy Medium---------------------------------------
 # num_title Easy Medium---------------------------------------

@@ -1,4 +1,6 @@
 import java.util.Arrays;
+import java.util.Arrays;
+import java.util.List;
 import java.util.HashMap;
 
 public class test {
@@ -6,32 +8,38 @@ public class test {
     public static void main(String[] args) {
         System.out.println("-----test java-----");
         test run = new test();
+        long startTime = System.currentTimeMillis();
+
+        // ------------------------------
+        int[] nums = {0,1,2,2,3,0,4,2};
+        int val = 2;
+        String haystack = "hello";
+        String needle = "a";
         
-        int[] nums = {2,7,11,15};
-        int target = 9;
-        int[] ans = run.twoSum(nums, target);
-        System.out.println(Arrays.toString(ans));
+        int ans = run.strStr(haystack, needle);
+        System.out.println(ans);
+        // System.out.println(Arrays.toString(ans));
+        // ------------------------------
+
+        long endTime = System.currentTimeMillis();
+        System.out.println("Elapse of time: " + (endTime - startTime) +  " ms");
     }
-
-    public int[] twoSum(int[] nums, int target) {
-        int[] ans = new int[2];
-
-        HashMap<Integer, Integer> map = new HashMap<>();
-
-        for (int i=0; i < nums.length; i++) {
-            int diff = target - nums[i];
-            if (map.containsKey(diff)) {
-                ans[0] = map.get(diff);
-                ans[1] = i;
-                return ans;
-            }
-
-            map.put(nums[i], i);
+    
+    
+    public int strStr(String haystack, String needle) {
+        if (needle == "") {
+            return 0;
         }
-
-        return null;
-
+        if (!haystack.contains(needle)) {
+            return -1;
+        } else {
+            return haystack.indexOf(needle);
+        }
     }
 
+
+
+
+    // ----------------------------------------------------------
 
 }
