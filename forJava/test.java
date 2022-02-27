@@ -11,6 +11,7 @@ public class test {
         long startTime = System.currentTimeMillis();
 
         // ------------------------------
+
         int[] nums = {0,1,2,2,3,0,4,2};
         int val = 2;
         String haystack = "hello";
@@ -19,13 +20,14 @@ public class test {
         int ans = run.strStr(haystack, needle);
         System.out.println(ans);
         // System.out.println(Arrays.toString(ans));
+        
         // ------------------------------
 
         long endTime = System.currentTimeMillis();
         System.out.println("Elapse of time: " + (endTime - startTime) +  " ms");
     }
     
-    
+
     public int strStr(String haystack, String needle) {
         if (needle == "") {
             return 0;

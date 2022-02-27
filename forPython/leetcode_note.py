@@ -1,3 +1,4 @@
+# 125. Valid Palindrome Easy---------------------------------------
 class Solution:
     def isPalindrome(self, x: int) -> bool:
         x_str=str(x)
@@ -13,7 +14,7 @@ class Solution:
 # ans=Solution().isPalindrome(x=-78187)    
 # print(ans)
         
-
+# 35. Search Insert Position Easy---------------------------------------
 class Solution:
     def searchInsert(self, nums, target) -> int:
         print(nums)
@@ -31,7 +32,7 @@ target = 4
 # ans=Solution().searchInsert(nums=nums,target=target)
 # print(ans)
 
-
+# 27. Remove Element Easy---------------------------------------
 class Solution:
     def removeElement(self, nums, val) -> int:
         while val in nums:
@@ -54,7 +55,7 @@ val=6
 # ans=Solution().removeElement(nums=nums,val=val)
 # print(ans)
 
-
+# 14. Longest Common Prefix Easy---------------------------------------
 class Solution:
     def longestCommonPrefix(self, strs):
         ans=""
@@ -65,7 +66,7 @@ class Solution:
                 break
         return ans
 
-
+# 16. 3Sum Closest Medium---------------------------------------
 class Solution:
     def threeSumClosest(self, nums, target):
         a=[]
@@ -81,7 +82,7 @@ target = 1
 ans=Solution().threeSumClosest(nums=nums,target=target)
 print(ans)
 
-
+# 26. Remove Duplicates from Sorted Array Easy---------------------------------------
 class Solution:
     def removeDuplicates(self, nums):
         nums=list(set(nums))
@@ -101,7 +102,7 @@ a = [-1, 1, 66.25, 333, 333, 1234.5]
 del a[:]
 print(a)
 
-
+# 66. Plus One Easy---------------------------------------
 class Solution:
     def plusOne(self, digits):
         a=''
@@ -120,6 +121,7 @@ digits = [4,3,2,1]
 ans=Solution().plusOne(digits=digits)
 print(ans)
 
+# 118. Pascal's Triangle Easy---------------------------------------
 class Solution:
     def generate(self, numRows: int) -> List[List[int]]:
         a=[]
@@ -148,6 +150,7 @@ class Solution:
         return a
 
 
+# 70. Climbing Stairs Easy---------------------------------------
 class Solution:
     def climbStairs(self, n):
         if n>=1 and n<=45:
@@ -182,7 +185,7 @@ n=3
 ans=Solution().climbStairs(n=n)
 print(ans)
 
-
+# 287. Find the Duplicate Number Easy---------------------------------------
 class Solution:
     def findDuplicates(self, nums: List[int]) -> List[int]:
         ans = []
@@ -254,7 +257,7 @@ def hi():
 
 
 
-
+# 202. Happy Number Easy---------------------------------------
 class Solution:
     def isHappy(self, n):
         str_n = str(n)
@@ -325,7 +328,9 @@ n = 99
 ans = Solution().countPrimes(n=n)
 print(ans)
                     
-# openbook
+
+# 204. Count Primes Medium---------------------------------------
+# # openbook
 class Solution:
     def countPrimes(self, n):
         if n <=2:
@@ -341,6 +346,7 @@ class Solution:
         return sum(primes)
 
 
+# 205. Isomorphic Strings Easy---------------------------------------
 class Solution:
     def isIsomorphic(self, s, t):
         d = set(zip(s, t))
@@ -376,6 +382,8 @@ ListNode:
 #     def __init__(self, val=0, next=None):
 #         self.val = val
 #         self.next = next
+
+# 21. Merge Two Sorted Lists Easy---------------------------------------
 class Solution:
     def mergeTwoLists(self, l1: Optional[ListNode], l2: Optional[ListNode]) -> Optional[ListNode]:
         dummy = temp = ListNode()
@@ -428,6 +436,7 @@ class Solution:
         return dum.next
 
 
+# 119. Pascal's Triangle II Easy---------------------------------------
 class Solution(object):
     def getRow(self, rowIndex):
         """
@@ -460,6 +469,7 @@ class Solution(object):
         return a[rowIndex]
 
 
+# 121. Best Time to Buy and Sell Stock Easy---------------------------------------
 class Solution:
     def maxProfit(self, prices: List[int]) -> int:
         profit = 0
@@ -489,6 +499,8 @@ class Solution:
         return sum(profit)
 
 
+
+# 125. Valid Palindrome Easy---------------------------------------
 class Solution:
     def isPalindrome(self, s: str) -> bool:
         a = (''.join(x for x in s if x.isalpha() or x.isdigit())).lower()
@@ -497,6 +509,9 @@ class Solution:
             return True
         else: return False
 
+
+# 128. Longest Consecutive Sequence Medium---------------------------------------
+# openbook
 class Solution:
     def longestConsecutive(self, nums: List[int]) -> int:
         a = set(nums)
@@ -566,6 +581,7 @@ ans = Solution().longestConsecutive(nums=nums)
 print(ans)
 
 
+# 169. Majority Element Easy---------------------------------------
 class Solution:
     def majorityElement(self, nums: List[int]) -> int:
         set_nums = set(nums)
@@ -578,6 +594,8 @@ class Solution:
         return ans
             
 
+
+# 219. Contains Duplicate II Easy---------------------------------------
 class Solution:
     def containsNearbyDuplicate(self, nums: List[int], k: int) -> bool:
         for i in range(len(nums)):
@@ -616,6 +634,7 @@ class Solution:
         return False
                 
 
+# 231. Power of Two Easy---------------------------------------
 class Solution:
     def isPowerOfTwo(self, n: int) -> bool:
         x = 0
@@ -640,7 +659,7 @@ class Solution:
                 return False
                 
                 
-
+# 242. Valid Anagram Easy---------------------------------------
 class Solution:
     def isAnagram(self, s: str, t: str) -> bool:
         if sorted(s) == sorted(t):
@@ -648,7 +667,7 @@ class Solution:
         else:
             return False
             
-
+# 263. Ugly Number Easy---------------------------------------
 class Solution:
     def isUgly(self, n: int) -> bool:
         if n == 0:
@@ -666,6 +685,8 @@ class Solution:
         return True
 
 
+# 264. Ugly Number II Medium---------------------------------------
+# openbook
 class Solution:
     def nthUglyNumber(self, n: int) -> int:
         if n == 1:
@@ -719,6 +740,7 @@ class Solution:
         return ugly_number_list[n-1]
 
 
+# 283. Move Zeroes Easy---------------------------------------
 class Solution:
     def moveZeroes(self, nums: List[int]) -> None:
         """
@@ -732,7 +754,7 @@ class Solution:
         
         
         
-# 290 easy ---------------------------------------
+# 290. Word Pattern Easy ---------------------------------------
 class Solution:
     def wordPattern(self, pattern, s):
         s_list = s.split()
@@ -755,7 +777,7 @@ ans = Solution().wordPattern(pattern=pattern, s=s)
 print(ans)
 
 
-# 292 easy ---------------------------------------
+# 292. Nim Game Easy ---------------------------------------
 
 class Solution:
     def canWinNim(self, n: int) -> bool:
@@ -782,7 +804,7 @@ class Solution:
             return True
 
 
-# 345 easy ---------------------------------------
+# 345. Reverse Vowels of a String Easy ---------------------------------------
 class Solution:
     def reverseVowels(self, s: str) -> str:
         vowels = ['a', 'e', 'i', 'o', 'u', 'A', 'E', 'I', 'O', 'U']
@@ -861,7 +883,7 @@ def insertionSort(arr):
         arr[preIndex+1] = current
     return arr
 
-# 345 medium ---------------------------------------
+# 347. Top K Frequent Elements Medium ---------------------------------------
 
 nums = [1,1,1,2,2,3]
 k = 2
@@ -936,7 +958,7 @@ class Solution:
         return ans[n]
 
 
-# 367 easy ---------------------------------------
+# 367. Valid Perfect Square Easy ---------------------------------------
 class Solution:
     def isPerfectSquare(self, num: int) -> bool:
         ans = num ** 0.5
