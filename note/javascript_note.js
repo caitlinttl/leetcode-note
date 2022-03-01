@@ -1211,3 +1211,85 @@ arr.forEach((item) => {
 
 // Map { 'apple' => 2, 'banana' => 2, 'cat' => 1, 'dog' => 1, 'fat' => 4 }
 console.log(hashTable);
+
+
+// =====================================================================================================
+// *****String 操作
+// =====================================================================================================
+
+.length
+charAt()
+charCodeAt()
+concat()
+indexOf()
+lastIndexOf()
+match()
+replace()
+search()
+slice()
+split()
+substr()
+substring()
+toLowerCase()
+toUpperCase()
+
+trim() 
+//移除字串起始及結尾處的空白字元。 本文中的空白字元指所有空格字元（如：空格、欄標、無間斷空格等等）及換行字元（如：換行、回車等等）。
+
+// =====================================================================================================
+// *****Array 操作
+// =====================================================================================================
+
+arr.at(-1)        // 取出陣列的最後一個元素，可以用來替換 arr[arr.length-1] 的寫法
+arr.map( callback<element> )                  // 用來將陣列中的元素做轉換（computed），搭配 return
+arr.forEach( callback<item, index, array> )   // 用來疊代陣列中的元素，並執行動作，不需搭配 return
+arr.slice(begin, end)                         // 用來擷取陣列中的部分元素（不包含 end）
+arr.filter( callback<item, index, array> )    // 若 callback return 為 true 時則保留該元素
+arr.reduce( callback<accumulator, currentValue, currentIndex, array>, initialValue )  // 搭配 return ，return 的內容會進到 accumulator，最後回傳 accumulator
+arr.join('<str>')                            // 將陣列以 <str> 連接成字串，預設是","
+
+// 根據 callback 的規則篩選，需在 callback 中搭配 return 使用
+arr.some( callback<item, index, array> )      // 檢驗陣列中是否有符合該 callback 規則的元素，有的話回傳 true
+arr.every( callback<item, index, array> )     // 檢驗陣列中所有元素是否都符合 callback 規則，有的話回傳 true
+arr.find( callback<item, index, array> )      // 檢驗陣列中是否有符合該 callback 規則的元素，有的話回傳第一個找到的元素值
+arr.findIndex( callback<item, index, array> ) // 檢驗陣列中是否有符合該 callback 規則的元素，有的話回傳第一個找到的 index
+
+// 根據 target 篩選
+arr.includes(target, fromIndex)               // 檢驗陣列中是否包含 target 這個 element，有的話回傳 true
+arr.indexOf( target, fromIndex )              // 返回找到該元素的第一個 index 值，若找不到則回傳 -1
+
+/**
+ * 原陣列會被改變(mutation method)
+**/
+arr.pop()                                     // 刪除最後一個元素
+arr.push()                                    // 將元素塞入陣列中
+arr.shift()                                   // 刪除陣列中第一個元素
+arr.unshift()                                 // 將元素插入到陣列中第一個
+arr.splice(start, deleteCount, newItem)       // 用來移除陣列中的部分元素，並可補入新元素
+arr.sort(compareFunction)                     // 根據 compareFunction 來將陣列重新排序
+arr.concat(value1, [value2], ...)             // 把陣列連接在一起
+
+
+
+// =====================================================================================================
+// *****Map 操作
+// =====================================================================================================
+
+// 透過 .set(key, value) 來在 Map 中添加屬性
+myMap.set(keyString, 'value associated with string');
+myMap.set(keyObj, 'value associated with object');
+myMap.set(keyFunc, 'value associated with function');
+
+// 方法
+myMap.has(keyString); // true，透過 .has 判斷該 Map 中是否有某一屬性
+myMap.size; //  3，透過 .size 來取得 Map 內的屬性數目
+myMap.get(keyString); // 使用 .get(key) 可取得屬性的內容
+myMap.delete(keyString); // 刪除 Map 中的某個屬性，成功刪除回傳 true，否則 false
+myMap.clear(); // 清空整個 Map
+
+
+myMap.keys(); // 取得 Map 的所有 keys，回傳 Iterable 的物件
+myMap.values(); // 取得 Map 的所有 values，回傳 Iterable 的物件
+myMap.entires(); // 取得 Map 的所有內容，回傳 Iterable 的物件
+
+

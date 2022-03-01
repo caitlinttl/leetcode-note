@@ -5114,8 +5114,15 @@ class Solution:
         return len(nums)
         
 
-# num_title Easy Medium---------------------------------------
+# 58. Length of Last Word Easy---------------------------------------
 
+class Solution:
+    def lengthOfLastWord(self, s: str) -> int:
+        ss=s.strip()
+        # strip 去除頭尾指定符號, default為空格
+        a=ss.split(" ")
+        return len(a[-1])
+        
 
 
 # num_title Easy Medium---------------------------------------
