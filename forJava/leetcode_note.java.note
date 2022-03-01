@@ -162,7 +162,65 @@ public class leetcode_note {
     }
     
     
-    // num_title Easy Medium---------------------------------------
+    // 14. Longest Common Prefix Easy---------------------------------------
+
+
+    public static void main(String[] args) {
+        System.out.println("-----test java-----");
+        test run = new test();
+        long startTime = System.currentTimeMillis();
+
+        // ------------------------------
+
+        // String[] strs = {"ab", "a"};
+        String[] strs = {"flower","flow","flight"};
+        
+        String ans = run.longestCommonPrefix(strs);
+        System.out.println(ans);
+        // System.out.println(Arrays.toString(ans));
+        
+        // ------------------------------
+
+        long endTime = System.currentTimeMillis();
+        System.out.println("Elapse of time: " + (endTime - startTime) +  " ms");
+    }
+    
+
+    public String longestCommonPrefix(String[] strs) {
+        String ans = new String();
+
+        for (int i = 0; i < strs[0].length(); i++) {
+            for (int j = 0; j < strs.length - 1; j++) {
+                if (strs[j+1].length() <= i) {
+                    // To avoid "String index out of range" 下一個字串的長度, 要大於索引值
+                    return ans;
+                }
+                if (strs[j].charAt(i) != strs[j+1].charAt(i)) {
+                    // String index out of range
+                    return ans;
+                }
+            }
+            ans += strs[0].charAt(i);
+        }
+        return ans;
+        
+    }
+
+    public String longestCommonPrefix(String[] strs) {
+
+        for (int i = 0; i < strs[0].length(); i++) {
+            char ch = strs[0].charAt(i);
+            for (int j = 1; j < strs.length; j++) {
+                if (strs[j].length() <= i || strs[j].charAt(i) != ch) {
+                    // 長度不夠 或 字母不對 就return
+                    return strs[0].substring(0,i);
+                }
+            }
+        }
+        return strs[0];
+    
+    }    
+
     // num_title Easy Medium---------------------------------------
     // num_title Easy Medium---------------------------------------
 

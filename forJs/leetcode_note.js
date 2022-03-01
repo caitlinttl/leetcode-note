@@ -114,7 +114,47 @@ var removeElement = function(nums, val) {
 
 
 
-// num_title Easy Medium---------------------------------------
+// 14. Longest Common Prefix Easy---------------------------------------
+
+/**
+ * @param {string[]} strs
+ * @return {string}
+ */
+// Time Complexity: O(M*N), M = length of shortest word, N = length of given array
+// Space Complexity: O(1)
+ var longestCommonPrefix = function(strs) {
+    if (!strs.length) return "";
+    let ans = "";
+    for (var i = 0; i < strs[0].length; i++) {
+        for (var j = 0; j < strs.length -1; j++) {
+            if (strs[j][i] !== strs[j+1][i]) {
+                return ans;
+            }
+        }
+        ans += strs[0][i];
+    }
+    return ans
+    
+};
+
+
+var longestCommonPrefix = function(strs) {
+    if (!strs.length) return '';
+    
+    for (let i = 0; i < strs[0].length; i++) {
+        for (let s of strs) {
+            if (s[i] !== strs[0][i]) return s.slice(0, i);
+        }
+    }
+    return strs[0]
+    
+};
+
+
+var strs = ["flower","flow","flight"]
+console.log(longestCommonPrefix(strs))
+
+
 // num_title Easy Medium---------------------------------------
 // num_title Easy Medium---------------------------------------
 

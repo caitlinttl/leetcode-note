@@ -16,8 +16,10 @@ public class test {
         int val = 2;
         String haystack = "hello";
         String needle = "a";
+        // String[] strs = {"ab", "a"};
+        String[] strs = {"flower","flow","flight"};
         
-        int ans = run.strStr(haystack, needle);
+        String ans = run.longestCommonPrefix(strs);
         System.out.println(ans);
         // System.out.println(Arrays.toString(ans));
         
@@ -28,15 +30,18 @@ public class test {
     }
     
 
-    public int strStr(String haystack, String needle) {
-        if (needle == "") {
-            return 0;
+    public String longestCommonPrefix(String[] strs) {
+
+        for (int i = 0; i < strs[0].length(); i++) {
+            char ch = strs[0].charAt(i);
+            for (int j = 1; j < strs.length; j++) {
+                if (strs[j].length() <= i || strs[j].charAt(i) != ch) {
+                    return strs[0].substring(0,i);
+                }
+            }
         }
-        if (!haystack.contains(needle)) {
-            return -1;
-        } else {
-            return haystack.indexOf(needle);
-        }
+        return strs[0];
+    
     }
 
 

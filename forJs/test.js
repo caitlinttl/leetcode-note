@@ -2,21 +2,18 @@
 
 
 
-
-
-
-
 console.log("-----test js-----")
 var start = new Date().getTime(); 
 
 // ------------------------------
 
-var nums = [0,1,2,2,3,0,4,2]
+var strs = ["flower","flow","flight"]
+var strs = ["ab", "a"]
 var val = 2
 var haystack = "hello";
 var needle = "ll";
 
-console.log(strStr(haystack,needle))
+console.log(longestCommonPrefix(strs))
 
 // ------------------------------
 
