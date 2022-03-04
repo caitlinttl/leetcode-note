@@ -221,9 +221,29 @@ public class leetcode_note {
     
     }    
 
-    // num_title Easy Medium---------------------------------------
-    // num_title Easy Medium---------------------------------------
+    // 58. Length of Last Word Easy Medium---------------------------------------
 
+    public int lengthOfLastWord(String s) {
+        String[] s_array = s.trim().split(" ");
+        return s_array[s_array.length - 1].length();
+    }
+    
+    // 387. First Unique Character in a String Easy---------------------------------------
+    
+    // String s = "leetcode";
+    public int firstUniqChar(String s) {
+        for (int i = 0; i < s.length(); i++) {
+            // The char is first time appear and it never appear again.
+            if (s.indexOf(s.charAt(i)) == i && s.indexOf(s.charAt(i), i + 1) == -1 ) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    // num_title Easy Medium---------------------------------------
+    // num_title Easy Medium---------------------------------------
+    // num_title Easy Medium---------------------------------------
 
     // num_title Easy Medium---------------------------------------
     // num_title Easy Medium---------------------------------------

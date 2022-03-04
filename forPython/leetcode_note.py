@@ -1049,7 +1049,23 @@ class Solution(object):
             return -1
         else:
             return min(ans)
+
+
+class Solution(object):
+    def firstUniqChar(self, s):
+        """
+        :type s: str
+        :rtype: int
+        """
+        for i in range(len(s)):
+            if s.index(s[i]) == i and s.find(s[i], i+1) == -1:
+                # 同時符合: 第一次出現，且沒有再出現，即是答案。
+                # find()如果未找到子字符串，則方法返回-1
+                # index()則引發異常。(ValueError: substring not found)
+                return i
+        return -1
             
+                    
 
 # 389.   Find the Difference Easy ---------------------------------------
 class Solution(object):
@@ -5125,7 +5141,31 @@ class Solution:
         
 
 
-# num_title Easy Medium---------------------------------------
+# 387. First Unique Character in a String Easy---------------------------------------
+
+class Solution(object):
+    def firstUniqChar(self, s):
+        """
+        :type s: str
+        :rtype: int
+        """
+        ans = []
+        set_s = set(list(s))
+        for i in set_s:
+            count = list(s).count(i)
+            if count == 1:
+                index = s.index(i)
+                ans.append(index)
+                
+        if ans == []:
+            return -1
+        else:
+            return min(ans)
+            
+        
+
+
+
 # num_title Easy Medium---------------------------------------
 # num_title Easy Medium---------------------------------------
 # num_title Easy Medium---------------------------------------

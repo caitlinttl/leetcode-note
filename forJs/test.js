@@ -1,7 +1,4 @@
 
-
-
-
 console.log("-----test js-----")
 var start = new Date().getTime(); 
 
@@ -10,10 +7,10 @@ var start = new Date().getTime();
 var strs = ["flower","flow","flight"]
 var strs = ["ab", "a"]
 var val = 2
-var haystack = "hello";
+var s = "leetcode";
 var needle = "ll";
 
-console.log(longestCommonPrefix(strs))
+console.log(firstUniqChar(s))
 
 // ------------------------------
 

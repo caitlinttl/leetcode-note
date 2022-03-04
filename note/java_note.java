@@ -240,6 +240,8 @@ public class java_note {
         System.out.println(message.toUpperCase());
         System.out.println(message.toCharArray());
         System.out.println(message.isEmpty());
+        System.out.println(message.trim());
+        System.out.println(message.split(""));
         System.out.println(message.equals("aa")); // return boolean
         System.out.println(message.compareTo("aa")); // return int, 0表示相同
         System.out.println(message.indexOf('e'));
@@ -610,5 +612,19 @@ Arrays.sort( 參數很多種 ) :把陣列在指定範圍或全部按照”升序
 
 System.arraycopy(arraycopy(Object src,  int srcPos, Object dest, int destPos, int length)
 
+
+*/
+
+
+/* 
+取array得最後元素
+
+array 
+firstNum = numbers[0];
+lastNum = numbers[numbers.length-1];
+
+ArrayList
+firstNum = numbers.get(0);
+lastNum = numbers.get(numbers.size() - 1); 
 
 */

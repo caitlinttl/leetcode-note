@@ -14,12 +14,12 @@ public class test {
 
         int[] nums = {0,1,2,2,3,0,4,2};
         int val = 2;
-        String haystack = "hello";
+        String s = "leetcode";
         String needle = "a";
         // String[] strs = {"ab", "a"};
         String[] strs = {"flower","flow","flight"};
         
-        String ans = run.longestCommonPrefix(strs);
+        int ans = run.firstUniqChar(s);
         System.out.println(ans);
         // System.out.println(Arrays.toString(ans));
         
@@ -30,18 +30,13 @@ public class test {
     }
     
 
-    public String longestCommonPrefix(String[] strs) {
-
-        for (int i = 0; i < strs[0].length(); i++) {
-            char ch = strs[0].charAt(i);
-            for (int j = 1; j < strs.length; j++) {
-                if (strs[j].length() <= i || strs[j].charAt(i) != ch) {
-                    return strs[0].substring(0,i);
-                }
+    public int firstUniqChar(String s) {
+        for (int i = 0; i < s.length(); i++) {
+            if (s.indexOf(s.charAt(i)) == i && s.indexOf(s.charAt(i), i + 1) == -1 ) {
+                return i;
             }
         }
-        return strs[0];
-    
+        return -1;
     }
 
 

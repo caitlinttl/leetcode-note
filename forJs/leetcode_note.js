@@ -155,9 +155,86 @@ var strs = ["flower","flow","flight"]
 console.log(longestCommonPrefix(strs))
 
 
-// num_title Easy Medium---------------------------------------
-// num_title Easy Medium---------------------------------------
+// 58. Length of Last Word Easy---------------------------------------
+/**
+ * @param {string} s
+ * @return {number}
+ */
+ var lengthOfLastWord = function(s) {
+    var s = s.trim()
+    var s = s.split(" ")
+    console.log(s[s.length -1])
+    // return s[s.length -1].length
+    return s.at(-1).length
+    // 取出陣列最後一個元素
+    
+};
 
+
+// 387. First Unique Character in a String Easy---------------------------------------
+
+/**
+ * @param {string} s
+ * @return {number}
+ */
+// Time Limit Exceeded !!
+ var firstUniqChar = function(s) {
+    var s_array = s.split('')
+    var s_arrat_set = new Set(s_array)
+    for (i = 0; i < s_array.length; i++) {
+        var count  = s_array.filter(j => j === s_array[i]).length
+        console.log(s_array[i] + ': ' + count)
+        if (count === 1) {
+            return i
+        }
+    }
+    return -1
+    
+};
+
+// Pass but too slow
+ var firstUniqChar = function(s) {
+    var s_array = s.split('')
+    var s_arrat_set = new Set(s_array)
+    console.log(s_arrat_set.size)
+    console.log(s_arrat_set.keys())
+
+    for (key of s_arrat_set.keys()) {
+        var count  = s_array.filter(j => j === key).length
+        if (count === 1) {
+            return s.indexOf(key)
+        }
+    }
+    return -1
+
+
+    var ans = s_arrat_set.forEach(function (value, key) {
+        var count  = s_array.filter(j => j === key).length
+        console.log(key + ': ' + count)
+    })
+
+    
+};
+
+// smart solution !!
+ var firstUniqChar = function(s) {
+
+    for (var i = 0; i < s.length; i++) {
+        // 條件一: 此字母第一次出現的index為i, 意思是: 這個字母是第一次出現。
+        // 條件二: 此字母在index i+1 之後沒有再出現(index=-1), 意思是: 這個字母在這次之後, 就沒有再出現。
+        // 同時符合: 第一次出現，且沒有再出現，即是答案。
+        if (s.indexOf(s[i]) === i && s.indexOf(s[i], i + 1) === -1) {
+            return i;
+        }
+    }
+    return -1
+    
+};
+
+
+// num_title Easy Medium---------------------------------------
+// num_title Easy Medium---------------------------------------
+// num_title Easy Medium---------------------------------------
 
 // num_title Easy Medium---------------------------------------
 // num_title Easy Medium---------------------------------------
