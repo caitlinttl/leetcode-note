@@ -5141,29 +5141,7 @@ class Solution:
         
 
 
-# 387. First Unique Character in a String Easy---------------------------------------
-
-class Solution(object):
-    def firstUniqChar(self, s):
-        """
-        :type s: str
-        :rtype: int
-        """
-        ans = []
-        set_s = set(list(s))
-        for i in set_s:
-            count = list(s).count(i)
-            if count == 1:
-                index = s.index(i)
-                ans.append(index)
-                
-        if ans == []:
-            return -1
-        else:
-            return min(ans)
             
-        
-
 
 
 # num_title Easy Medium---------------------------------------
