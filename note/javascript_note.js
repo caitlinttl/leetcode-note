@@ -1,3 +1,11 @@
+// npm 指令
+npm install http-server
+npm list
+
+// 參數 -g 代表 global 的意思
+npm install -g typescript
+npm list -g 
+
 var x = 5;
 x = "abc"; 
 // 需要var了，因為第一行var x已經將x定義為變量了，不需要重複定義。

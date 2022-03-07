@@ -232,7 +232,38 @@ console.log(longestCommonPrefix(strs))
 };
 
 
-// num_title Easy Medium---------------------------------------
+// 860. Lemonade Change Easy---------------------------------------
+
+/**
+ * @param {number[]} bills
+ * @return {boolean}
+ */
+ var lemonadeChange = function(bills) {
+    var n5 = 0
+    var n10 = 0
+    for (var bill of bills) {
+        if (bill == 5) {
+            n5 += 1;
+        } else if (bill == 10) {
+            n5 -= 1;
+            n10 += 1;
+        } else if (bill == 20) {
+            if (n10 == 0) {
+                n5 -= 3;
+            } else {
+                n10 -= 1;
+                n5 -= 1;
+            }
+        }
+        if (n5 < 0 || n10 < 0) {
+        // if (n5 < 0 ) {
+            return false;
+        }
+    }
+    return true;
+};
+
+
 // num_title Easy Medium---------------------------------------
 // num_title Easy Medium---------------------------------------
 

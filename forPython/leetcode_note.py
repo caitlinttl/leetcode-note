@@ -5141,8 +5141,52 @@ class Solution:
         
 
 
-            
+# 860. Lemonade Change Easy---------------------------------------
+class Solution:
+    def lemonadeChange(self, bills):
+        change = {5:0, 10:0, 20:0}
+        for bill in bills:
+            if bill == 5:
+                change[5] += 1
+            elif bill == 10:
+                change[10] += 1
+                if change[5] == 0:
+                    return False
+                else:
+                    change[5] -= 1
+            elif bill == 20:
+                change[20] += 1
+                if change[5] >= 1 and change[10] >= 1:
+                    change[5] -= 1
+                    change[10] -= 1
+                elif change[5] >= 3 :
+                    change[5] -= 3
+                else:
+                    return False
+        return True
 
+
+# Faster
+class Solution:
+    def lemonadeChange(self, bills: List[int]) -> bool:
+        n5 = 0
+        n10 = 0
+        for bill in bills:
+            if bill == 5:
+                n5 += 1
+            elif bill == 10:
+                n5 -= 1
+                n10 += 1
+            elif bill == 20:
+                if n10 == 0:
+                    n5 -= 3
+                else:
+                    n10 -=1
+                    n5 -= 1
+            if n5 < 0 or n10 < 0:
+                return False
+        return True
+        
 
 # num_title Easy Medium---------------------------------------
 # num_title Easy Medium---------------------------------------

@@ -1,4 +1,5 @@
 
+        
 
 import datetime
 print("-----test python-----")
@@ -6,9 +7,9 @@ startdate = datetime.datetime.now()
 
 # ------------------------------
 
-strs = ["flower","flow","flight"]
+strs = [5,5,10,10,20]
 answers = [1,1,2,6,7,3,2,4,3,2,6,7,8]
-ans = Solution().longestCommonPrefix(strs)
+ans = Solution().lemonadeChange(strs)
 print(ans)
 
 # ------------------------------
