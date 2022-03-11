@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Arrays;
 import java.util.List;
@@ -14,13 +15,16 @@ public class test {
 
         int[] nums = {0,1,2,2,3,0,4,2};
         int val = 2;
-        String s = "leetcode";
+        String r = "aacd";
+        String m = "aabc";
         String needle = "a";
         // String[] strs = {"ab", "a"};
         String[] strs = {"flower","flow","flight"};
+        char[] s = {'h','e','l','l','o'};
         
-        int ans = run.firstUniqChar(s);
-        System.out.println(ans);
+        boolean ans = run.reverseString(s);
+        // System.out.println(ans);
+        System.out.print(run.reverseString(s));
         // System.out.println(Arrays.toString(ans));
         
         // ------------------------------
@@ -30,13 +34,16 @@ public class test {
     }
     
 
-    public int firstUniqChar(String s) {
-        for (int i = 0; i < s.length(); i++) {
-            if (s.indexOf(s.charAt(i)) == i && s.indexOf(s.charAt(i), i + 1) == -1 ) {
-                return i;
-            }
+    public boolean reverseString(char[] s) {
+        for (int i = 0; i < s.length/2; i++) {
+            char tmp = s[i];
+            s[i] = s[s.length - 1 - i];
+            s[s.length -1 -i] = tmp;
         }
-        return -1;
+
+        
+        return true;
+        
     }
 
 

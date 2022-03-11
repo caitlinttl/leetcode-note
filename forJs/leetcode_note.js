@@ -264,6 +264,41 @@ console.log(longestCommonPrefix(strs))
 };
 
 
+// 383. Ransom Note Easy---------------------------------------
+
+
+/**
+ * @param {string} ransomNote
+ * @param {string} magazine
+ * @return {boolean}
+ */
+ var canConstruct = function(ransomNote, magazine) {
+    var magazine_array = magazine.split('')
+    for (var i = 0; i < ransomNote.length; i++) {
+        if (magazine_array.indexOf(ransomNote[i]) === -1) {
+            return false
+        } else {
+            magazine_array.splice(magazine_array.indexOf(ransomNote[i]), 1)
+        }
+    }
+    return true
+    
+};
+
+
+
+// 344. Reverse String Easy---------------------------------------
+
+/**
+ * @param {character[]} s
+ * @return {void} Do not return anything, modify s in-place instead.
+ */
+ var reverseString = function(s) {
+    return s.reverse();
+    
+};
+
+// num_title Easy Medium---------------------------------------
 // num_title Easy Medium---------------------------------------
 // num_title Easy Medium---------------------------------------
 

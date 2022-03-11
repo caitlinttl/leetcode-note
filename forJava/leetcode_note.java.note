@@ -268,6 +268,58 @@ public class leetcode_note {
 
 
 
+    // 383. Ransom Note Easy---------------------------------------
+
+    public boolean canConstruct(String ransomNote, String magazine) {
+        String[] magazine_arr = magazine.split("");
+        // array to arrayList
+        ArrayList<String> magazine_arrlist = new ArrayList<String>(Arrays.asList(magazine_arr));
+        for (int i = 0; i < ransomNote.length(); i++) {
+            // Char to string
+            String need = Character.toString(ransomNote.charAt(i));
+            if ( magazine_arrlist.indexOf(need) == -1) {
+                return false;
+            } else {
+                magazine_arrlist.remove(magazine_arrlist.indexOf(need));
+            }
+        }
+        return true;
+    }    
+
+
+    // Faster!!
+    public boolean canConstruct(String ransomNote, String magazine) {
+        if (ransomNote.length() > magazine.length())
+            return false;
+        int[] count = new int[26];
+        for (int i = 0; i < magazine.length(); i++) {
+            count[magazine.charAt(i) - 'a']++;
+            if (i < ransomNote.length())
+                count[ransomNote.charAt(i) - 'a']--;
+        }
+        for (int i = 0; i < count.length; i++) {
+            if (count[i] < 0)
+                return false;
+        }
+        return true;
+    }
+
+
+    // 344. Reverse String Easy---------------------------------------
+
+    // 直接改變原char[] s
+    // 頭尾互換
+    public void reverseString(char[] s) {
+        
+        for (int i = 0; i < s.length/2; i++) {
+            char tmp = s[i];
+            s[i] = s[s.length - 1 - i];
+            s[s.length -1 -i] = tmp;
+        }        
+    }
+
+
+    // num_title Easy Medium---------------------------------------
     // num_title Easy Medium---------------------------------------
     // num_title Easy Medium---------------------------------------
 

@@ -1276,6 +1276,7 @@ arr.unshift()                                 // 將元素插入到陣列中第�
 arr.splice(start, deleteCount, newItem)       // 用來移除陣列中的部分元素，並可補入新元素
 arr.sort(compareFunction)                     // 根據 compareFunction 來將陣列重新排序
 arr.concat(value1, [value2], ...)             // 把陣列連接在一起
+arr.reverse()                                 // 反轉陣列
 
 
 
