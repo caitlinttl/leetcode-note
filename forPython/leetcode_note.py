@@ -5233,8 +5233,35 @@ class Solution:
         s.reverse()
         
 
-# num_title Easy Medium---------------------------------------
-# num_title Easy Medium---------------------------------------
+# 1422. Maximum Score After Splitting a String Easy---------------------------------------
+# openbook
+
+class Solution:
+    def maxScore(self, s: str) -> int:
+        zeros = 1 if s[0] == "0" else 0 # 切在第一個字, 第一個字是0, zeros的總數是1, 是1的話總數是0
+        ones = s.count("1",1) # 計算從s[1:]開始的1的總數
+        ans = zeros + ones # 切在第一個字的總數
+        for i in range(1, len(s) -1): # 最後一個不用看(two non-empty substrings)
+            if s[i] == "0": # 如果是0, 0總數加一
+                zeros += 1
+            else:
+                ones -= 1 # 如果是1, 1總數減一
+            ans = max(ones + zeros, ans)
+        return ans
+            
+
+
+
+# 151. Reverse Words in a String Medium---------------------------------------
+
+class Solution:
+    def reverseWords(self, s: str) -> str:
+        s_list = s.split()
+        # print(s_list)
+        s_list.reverse()
+        return " ".join(s_list)
+        
+
 # num_title Easy Medium---------------------------------------
 # num_title Easy Medium---------------------------------------
 # num_title Easy Medium---------------------------------------

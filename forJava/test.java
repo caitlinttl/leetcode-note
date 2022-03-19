@@ -20,11 +20,12 @@ public class test {
         String needle = "a";
         // String[] strs = {"ab", "a"};
         String[] strs = {"flower","flow","flight"};
-        char[] s = {'h','e','l','l','o'};
+        // char[] s = {'h','e','l','l','o'};
+        String s = "a good   example  ";
         
-        boolean ans = run.reverseString(s);
-        // System.out.println(ans);
-        System.out.print(run.reverseString(s));
+        String ans = run.reverseWords(s);
+        System.out.println(ans);
+        // System.out.print(run.reverseString(s));
         // System.out.println(Arrays.toString(ans));
         
         // ------------------------------
@@ -34,18 +35,21 @@ public class test {
     }
     
 
-    public boolean reverseString(char[] s) {
-        for (int i = 0; i < s.length/2; i++) {
-            char tmp = s[i];
-            s[i] = s[s.length - 1 - i];
-            s[s.length -1 -i] = tmp;
+    public String reverseWords(String s) {
+        String[] s_list = s.trim().split(" ");
+        StringBuilder sb = new StringBuilder();
+        for (int i = s_list.length - 1; i >= 0; i--) {
+            if (s_list[i].isEmpty()) {
+                continue;
+            } else {
+                sb.append(s_list[i]);
+                if (i > 0) {
+                    sb.append(" ");
+                }
+            }
         }
-
-        
-        return true;
-        
+        return sb.toString();
     }
-
 
 
 

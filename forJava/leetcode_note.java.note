@@ -319,8 +319,43 @@ public class leetcode_note {
     }
 
 
-    // num_title Easy Medium---------------------------------------
-    // num_title Easy Medium---------------------------------------
+    // 1422. Maximum Score After Splitting a String Easy---------------------------------------
+
+    // same as python solution.
+    // openbook
+    public int maxScore(String s) {
+        int zero = 0, one = 0, res = 0;
+        for (char c : s.toCharArray()) {
+            if (c == '1') one++;
+        }
+        for (int i = 0; i < s.length() - 1; i++) {  // when divide btwn i  and i + 1;
+            if (s.charAt(i) == '1') one--;  //num of ones on right side;
+            else zero++;  // num of zeros on left side
+            res  = Math.max(res, one + zero);
+        }
+        return res;
+    }    
+
+
+    // 151. Reverse Words in a String Medium---------------------------------------
+
+    public String reverseWords(String s) {
+        String[] s_list = s.trim().split(" ");
+        StringBuilder sb = new StringBuilder();
+        for (int i = s_list.length - 1; i >= 0; i--) {
+            if (s_list[i].isEmpty()) {
+                continue;
+            } else {
+                sb.append(s_list[i]);
+                if (i > 0) {
+                    sb.append(" ");
+                }
+            }
+        }
+        return sb.toString();
+    }
+
+
     // num_title Easy Medium---------------------------------------
 
     // num_title Easy Medium---------------------------------------

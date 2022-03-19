@@ -298,8 +298,43 @@ console.log(longestCommonPrefix(strs))
     
 };
 
-// num_title Easy Medium---------------------------------------
-// num_title Easy Medium---------------------------------------
+// 1422. Maximum Score After Splitting a String Easy---------------------------------------
+
+/**
+ * @param {string} s
+ * @return {number}
+ */
+ var maxScore = function(s) {
+    var max = 0;
+    for (var i = 1; i < s.length; i++ ) {
+        var left = s.slice(0, i).split('0').length -1; // s.slice(0, i) ==> 0, s.slice(0, i).split('0') ==> ['', '']
+        var right = s.slice(i).split('1').length -1; //// s.slice(i) ==> 11101, s.slice(i).split('1') ==> ['', '', '', '0, '']
+        var cur = left + right;
+        max = Math.max(max, cur);
+    }
+    return max
+};
+
+
+// 151. Reverse Words in a String Medium---------------------------------------
+
+// array 和 string 的操作
+/**
+* @param {string} s
+* @return {string}
+*/
+var reverseWords = function(s) {
+    var s_list = s.split(" "); // string to array
+    while (s_list.includes('')) {  // 移除array裡面特定元素
+        s_list.splice(s_list.indexOf(''),1)
+    }
+    s_list.reverse() // 反轉array
+    return s_list.join(" ") // array to string
+   
+};
+
+
+
 // num_title Easy Medium---------------------------------------
 
 // num_title Easy Medium---------------------------------------
