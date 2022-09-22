@@ -220,6 +220,9 @@ public class leetcode_note {
         return strs[0];
     
     }    
+    //     TC: O(n)*O(s) n = array.length, s = minString.length
+    //     SC: O(1)        
+
 
     // 58. Length of Last Word Easy Medium---------------------------------------
 
