@@ -5262,6 +5262,55 @@ class Solution:
         return " ".join(s_list)
         
 
+# 49. Group Anagrams Medium---------------------------------------
+
+# Time Limit Exceeded!!
+class Solution:
+    def groupAnagrams(self, strs: List[str]) -> List[List[str]]:
+        list_strs = list(strs)
+        ans = []
+        new = 1
+        for s in list_strs:
+            new = 1
+            for i in range(len(ans)):
+                if sorted(ans[i][0]) == sorted(s):
+                    new = 0
+                    ans[i].append(s)
+                    break
+            if new == 1:
+                tmp = []
+                tmp.append(s)
+                ans.append(tmp)
+                
+        return(ans)
+
+
+# Should use map
+class Solution:
+    def groupAnagrams(self, strs: List[str]) -> List[List[str]]:
+        list_strs = list(strs)
+        ans = []
+        seen = {}
+        for s in list_strs:
+            sort_s = "".join(sorted(s)) 
+            # sorted(s) is: ["a", "e", "t"]
+            # sort_s = "".join(sorted(s)) = "aet"
+            # print(sort_s)
+            if sort_s in seen:
+                ans[seen[sort_s]].append(s)
+            else:
+                seen[sort_s] = len(ans) 
+                tmp = []
+                tmp.append(s)
+                ans.append(tmp)
+                
+        return(ans)
+                
+strs = ["eat","tea","tan","ate","nat","bat","tea"]
+output  = [["eat","tea","ate","tea"],["tan","nat"],["bat"]]
+
+
+# num_title Easy Medium---------------------------------------
 # num_title Easy Medium---------------------------------------
 # num_title Easy Medium---------------------------------------
 # num_title Easy Medium---------------------------------------
