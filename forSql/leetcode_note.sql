@@ -183,8 +183,163 @@ with my_list as
     where id not in (select to_keep from my_list);
 
 
--- num_title Easy Medium---------------------------------------
+-- 197. Rising Temperature Easy---------------------------------------
+Input: 
+Weather table:
++----+------------+-------------+
+| id | recordDate | temperature |
++----+------------+-------------+
+| 1  | 2015-01-01 | 10          |
+| 2  | 2015-01-02 | 25          |
+| 3  | 2015-01-03 | 20          |
+| 4  | 2015-01-04 | 30          |
++----+------------+-------------+
+Output: 
++----+
+| id |
++----+
+| 2  |
+| 4  |
++----+
+Explanation: 
+In 2015-01-02, the temperature was higher than the previous day (10 -> 25).
+In 2015-01-04, the temperature was higher than the previous day (20 -> 30).
+
 -- Answer:
+SELECT w1.id from Weather w1, Weather w2 where dateDiff(w1.recordDate, w2.recordDate) = 1 AND w1.temperature > w2.temperature;
+
+-- 511. Game Play Analysis I Easy---------------------------------------
+Input: 
+Activity table:
++-----------+-----------+------------+--------------+
+| player_id | device_id | event_date | games_played |
++-----------+-----------+------------+--------------+
+| 1         | 2         | 2016-03-01 | 5            |
+| 1         | 2         | 2016-05-02 | 6            |
+| 2         | 3         | 2017-06-25 | 1            |
+| 3         | 1         | 2016-03-02 | 0            |
+| 3         | 4         | 2018-07-03 | 5            |
++-----------+-----------+------------+--------------+
+Output: 
++-----------+-------------+
+| player_id | first_login |
++-----------+-------------+
+| 1         | 2016-03-01  |
+| 2         | 2017-06-25  |
+| 3         | 2016-03-02  |
++-----------+-------------+
+
+-- Answer:
+select player_id, min(event_date) as first_login from Activity group by player_id;
+
+-- 584. Find Customer Referee Easy---------------------------------------
+Input: 
+Customer table:
++----+------+------------+
+| id | name | referee_id |
++----+------+------------+
+| 1  | Will | null       |
+| 2  | Jane | null       |
+| 3  | Alex | 2          |
+| 4  | Bill | null       |
+| 5  | Zack | 1          |
+| 6  | Mark | 2          |
++----+------+------------+
+Output: 
++------+
+| name |
++------+
+| Will |
+| Jane |
+| Bill |
+| Zack |
++------+
+
+-- Answer:
+select name from Customer where referee_id <> 2 or referee_id is null;
+
+-- 586. Customer Placing the Largest Number of Orders Easy---------------------------------------
+Input: 
+Orders table:
++--------------+-----------------+
+| order_number | customer_number |
++--------------+-----------------+
+| 1            | 1               |
+| 2            | 2               |
+| 3            | 3               |
+| 4            | 3               |
++--------------+-----------------+
+Output: 
++-----------------+
+| customer_number |
++-----------------+
+| 3               |
++-----------------+
+Explanation: 
+The customer with number 3 has two orders, which is greater than either customer 1 or 2 because each of them only has one order. 
+So the result is customer_number 3.
+
+-- Answer:
+select customer_number from Orders group by customer_number order by count(order_number) desc limit 1;
+
+
+-- 595. Big Countries Easy---------------------------------------
+Input: 
+World table:
++-------------+-----------+---------+------------+--------------+
+| name        | continent | area    | population | gdp          |
++-------------+-----------+---------+------------+--------------+
+| Afghanistan | Asia      | 652230  | 25500100   | 20343000000  |
+| Albania     | Europe    | 28748   | 2831741    | 12960000000  |
+| Algeria     | Africa    | 2381741 | 37100000   | 188681000000 |
+| Andorra     | Europe    | 468     | 78115      | 3712000000   |
+| Angola      | Africa    | 1246700 | 20609294   | 100990000000 |
++-------------+-----------+---------+------------+--------------+
+Output: 
++-------------+------------+---------+
+| name        | population | area    |
++-------------+------------+---------+
+| Afghanistan | 25500100   | 652230  |
+| Algeria     | 37100000   | 2381741 |
++-------------+------------+---------+
+
+-- Answer:
+select name, population, area from World where area >= 3000000 or population >= 25000000;
+
+
+-- 596. Classes More Than 5 Students Easy---------------------------------------
+Input: 
+Courses table:
++---------+----------+
+| student | class    |
++---------+----------+
+| A       | Math     |
+| B       | English  |
+| C       | Math     |
+| D       | Biology  |
+| E       | Math     |
+| F       | Computer |
+| G       | Math     |
+| H       | Math     |
+| I       | Math     |
++---------+----------+
+Output: 
++---------+
+| class   |
++---------+
+| Math    |
++---------+
+Explanation: 
+- Math has 6 students, so we include it.
+- English has 1 student, so we do not include it.
+- Biology has 1 student, so we do not include it.
+- Computer has 1 student, so we do not include it.
+
+-- Answer:
+select class from Courses group by class having count(class) >= 5;
+
+
+
 
 -- num_title Easy Medium---------------------------------------
 -- Answer:
