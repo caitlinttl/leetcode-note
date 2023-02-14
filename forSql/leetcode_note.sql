@@ -99,6 +99,7 @@ Output:
 Explanation: a@b.com is repeated two times.
 
 -- Answer:
+-- openbook
 select email Email from Person group by email having count(email) > 1;
 
 
@@ -206,6 +207,7 @@ In 2015-01-02, the temperature was higher than the previous day (10 -> 25).
 In 2015-01-04, the temperature was higher than the previous day (20 -> 30).
 
 -- Answer:
+-- openbook
 SELECT w1.id from Weather w1, Weather w2 where dateDiff(w1.recordDate, w2.recordDate) = 1 AND w1.temperature > w2.temperature;
 
 -- 511. Game Play Analysis I Easy---------------------------------------
@@ -280,6 +282,7 @@ The customer with number 3 has two orders, which is greater than either customer
 So the result is customer_number 3.
 
 -- Answer:
+-- openbook
 select customer_number from Orders group by customer_number order by count(order_number) desc limit 1;
 
 
@@ -339,6 +342,64 @@ Explanation:
 select class from Courses group by class having count(class) >= 5;
 
 
+-- 607. Sales Person Easy---------------------------------------
+-- Answer:
+select s.name from SalesPerson s 
+where s.sales_id not in 
+(select sales_id from Orders o, Company c where c.com_id = o.com_id and c.name = 'RED');
+
+
+-- 620. Not Boring Movies Easy---------------------------------------
+-- openbook
+-- Answer:
+select * from Cinema where id % 2 <> 0 and description <> 'boring' order by rating desc;
+select * from Cinema where mod(id,2) = 1 and description <> 'boring' order by rating desc;
+
+
+-- 627. Swap Salary Easy---------------------------------------
+-- openbook
+-- Answer:
+update Salary set sex = if(sex = 'f', 'm', 'f');
+update Salary set sex = case when sex = 'f' then 'm' else 'f' end;
+
+
+-- 1050. Actors and Directors Who Cooperated At Least Three Times Easy---------------------------------------
+-- Answer:
+-- openbook
+select actor_id, director_id from ActorDirector group by actor_id, director_id having count(timestamp) >= 3;
+
+
+-- 1084. Sales Analysis III Easy---------------------------------------
+-- openbook
+-- # Wherever you are given a range, keep MIN() and MAX() in mind
+-- TIP: 遇到Range的問題, 用group by 搭配 having min and max.
+-- Answer:
+select p.product_id, p.product_name from Product p 
+left join Sales s on p.product_id = s.product_id
+group by s.product_id having min(s.sale_date) >= '2019-01-01' and max(s.sale_date) <= '2019-03-31';
+
+
+-- 1141. User Activity for the Past 30 Days I Easy---------------------------------------
+-- openbook
+-- TIP: count 裡面也可用 distinct
+-- Answer:
+select activity_date as day, count(distinct user_id) as active_users from Activity 
+-- where datediff('2019-07-27',activity_date) <= 30 <<<<是錯的, 因為負值(比7/27之後的日期)也小於30
+where datediff('2019-07-27',activity_date) between 0 and 29 -- 是29不是30, between本身是包含邊界的, 題目是27(包含)的30天
+-- 如果是27(包含)的5天, 是27, 26, 25, 24, 23, 那麼是between 0 and 4(27-23),也就是(5-1), 也就是>22(不含),<=27(含)
+group by activity_date;
+
+select activity_date as day, count(distinct user_id) as active_users from Activity 
+where (activity_date > "2019-06-27" AND activity_date <= "2019-07-27") 
+group by activity_date;
+
+
+-- num_title Easy Medium---------------------------------------
+-- Answer:
+
+-- num_title Easy Medium---------------------------------------
+-- Answer:
+
 
 
 -- num_title Easy Medium---------------------------------------
@@ -355,5 +416,4 @@ select class from Courses group by class having count(class) >= 5;
 
 -- num_title Easy Medium---------------------------------------
 -- Answer:
-
 
