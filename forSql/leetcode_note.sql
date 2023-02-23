@@ -418,6 +418,51 @@ from Department group by id
 
 
 
+-- 1407. Top Travellers Easy---------------------------------------
+-- openbook
+-- 1. 判斷是否為空, 用 IFNULL
+-- 2. 左邊資料都要有, 用left join
+-- Answer:
+select u.name, IFNULL(sum(r.distance), 0) travelled_distance from Users u 
+left join Rides r on r.user_id = u.id 
+group by r.user_id order by travelled_distance desc, name asc;
+
+
+
+-- 1484. Group Sold Products By The Date Easy---------------------------------------
+-- openbook
+-- GROUP_CONCAT() 即可將多筆查詢結果串接合併為一筆
+-- Answer:
+select sell_date, count(distinct product) num_sold, 
+group_concat(distinct product ORDER BY product separator ',') products
+from Activities 
+GROUP BY sell_date
+ORDER BY sell_date asc;
+
+
+
+-- 1527. Patients With a Condition Easy---------------------------------------
+-- Answer:
+SELECT patient_id, patient_name, conditions from Patients where conditions like 'DIAB1%' or conditions like '% DIAB1%';
+
+
+-- 1581. Customer Who Visited but Did Not Make Any Transactions Easy---------------------------------------
+-- Answer:
+SELECT customer_id, count(customer_id) count_no_trans from Visits v 
+LEFT JOIN Transactions t 
+on v.visit_id = t.visit_id 
+where v.visit_id not in (select visit_id from Transactions) -- where t.visit_id is NULL
+GROUP BY customer_id;
+
+-- 1587. Bank Account Summary II Easy---------------------------------------
+-- Answer:
+select name, sum(t.amount) balance from Users u
+LEFT JOIN Transactions t
+on u.account = t.account
+GROUP BY u.account
+having balance > 10000;
+
+
 -- num_title Easy Medium---------------------------------------
 -- Answer:
 
