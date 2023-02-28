@@ -463,6 +463,55 @@ GROUP BY u.account
 having balance > 10000;
 
 
+-- 1667. Fix Names in a Table Easy---------------------------------------
+-- openbook
+-- CONCAT, UPPER, LOWER, SUBST (LEFT, RIGHT)
+-- Answer:
+select user_id, 
+CONCAT(UPPER(SUBSTR(name,1,1)), LOWER(SUBSTR(name,2))) as name 
+CONCAT(UPPER(LEFT(name,1)), LOWER(RIGHT(name,LENGTH(name)-1))) as name 
+from Users
+order by user_id;
+
+
+-- 1693. Daily Leads and Partners Easy---------------------------------------
+-- Answer:
+select date_id, make_name,
+count(distinct lead_id) as unique_leads,
+count(distinct partner_id) as unique_partners
+from DailySales group by date_id, make_name;
+
+
+-- 1729. Find Followers Count Easy---------------------------------------
+-- Answer:
+select user_id, count(follower_id) as followers_count
+from Followers f GROUP BY user_id ORDER BY user_id
+
+
+-- 1741. Find Total Time Spent by Each Employee Easy---------------------------------------
+-- Answer:
+select event_day as day, emp_id, sum(out_time - in_time) as total_time
+from Employees GROUP BY event_day, emp_id;
+
+
+-- 1757. Recyclable and Low Fat Products Easy---------------------------------------
+-- Answer:
+select product_id from Products 
+where low_fats = 'Y' and recyclable = 'Y';
+
+
+-- 1795. Rearrange Products Table Easy---------------------------------------
+-- Answer:
+SELECT product_id, 'store1' AS store, store1 AS price
+FROM Products WHERE store1 IS NOT NULL
+UNION
+SELECT product_id, 'store2' AS store, store2 AS price
+FROM Products WHERE store2 IS NOT NULL
+UNION
+SELECT product_id, 'store3' AS store, store3 AS price
+FROM Products WHERE store3 IS NOT NULL;
+
+
 -- num_title Easy Medium---------------------------------------
 -- Answer:
 
