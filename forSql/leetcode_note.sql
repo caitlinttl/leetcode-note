@@ -512,18 +512,101 @@ SELECT product_id, 'store3' AS store, store3 AS price
 FROM Products WHERE store3 IS NOT NULL;
 
 
--- num_title Easy Medium---------------------------------------
+-- 1873. Calculate Special Bonus Easy---------------------------------------
+-- Answer:
+select employee_id, 
+(case when (employee_id % 2 <> 0 and SUBSTR(name,1,1) <> 'M') then salary else 0 end) as bonus 
+from Employees
+order by employee_id; 
+
+-- 1890. The Latest Login in 2020 Easy---------------------------------------
+-- openbook
+-- 先 where 再 group by !! 
+-- 特定年份可以用YEAR(time_stamp)
+-- Answer:
+select user_id, max(time_stamp) as last_stamp
+from Logins
+where YEAR(time_stamp) = '2020'
+-- where time_stamp like '2020%'
+GROUP BY user_id;
+
+-- 1965. Employees With Missing Information Easy---------------------------------------
+-- openbook
+-- Answer:
+select e.employee_id from Employees e left join salaries s on e.employee_id = s.employee_id where s.salary is NULL
+UNION
+select s.employee_id from salaries s left join Employees e on e.employee_id = s.employee_id where e.name is NULL
+ORDER BY employee_id;
+
+select T.employee_id
+from 
+    (select * from Employees left JOIN Salaries USING(employee_id)
+    UNION
+    select * from Employees RIGHT JOIN Salaries USING(employee_id))
+as T
+where T.salary is null or T.name is NULL
+ORDER BY employee_id;
+
+
+-- 176. Second Highest Salary Medium---------------------------------------
+-- openbook
+-- limit 有兩個參數(省略第一個預設為0) [開始項] [數量]
+-- Answer:
+select IFNULL((select distinct salary from Employee order by salary desc limit 1,1),null) as SecondHighestSalary;
+select max(salary) as SecondHighestSalary from Employee where salary < (select max(salary) from Employee);
+
+
+-- 177. Nth Highest Salary Medium---------------------------------------
+-- openbook
+-- 設定參數用 SET
+-- Answer:
+CREATE FUNCTION getNthHighestSalary(N INT) RETURNS INT
+BEGIN
+SET N = N-1;
+  RETURN (
+      # Write your MySQL query statement below.
+      select distinct salary from Employee order by salary desc limit N, 1
+      
+  );
+END
+
+
+-- 178. Rank Scores Medium---------------------------------------
+-- openbook
+-- Answer:
+select score, 
+(select count(distinct score) from Scores where score >= s.score) as 'rank' 
+from Scores s 
+ORDER BY score desc;
+
+-- 180. Consecutive Numbers Medium---------------------------------------
+-- Answer:
+select distinct num as ConsecutiveNums
+from Logs L
+where (num = (select num from Logs where id = (L.id)+1))
+and (num = (select num from Logs where id = (L.id)+2));
+
+-- 184. Department Highest Salary Medium---------------------------------------
+-- openbook
+-- 先 where 再 group by !! 
+-- Answer:
+select (d.name) as Department, (e.name) as Employee, e.salary as salary
+from Employee e, Department d
+where e.departmentId = d.id
+and (departmentId, salary) in 
+(select departmentId, max(salary) from Employee group by departmentId);
+
+-- num_title Medium---------------------------------------
 -- Answer:
 
--- num_title Easy Medium---------------------------------------
+-- num_title Medium---------------------------------------
 -- Answer:
 
--- num_title Easy Medium---------------------------------------
+-- num_title Medium---------------------------------------
 -- Answer:
 
--- num_title Easy Medium---------------------------------------
+-- num_title Medium---------------------------------------
 -- Answer:
 
--- num_title Easy Medium---------------------------------------
+-- num_title Medium---------------------------------------
 -- Answer:
-

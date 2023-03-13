@@ -5310,7 +5310,18 @@ strs = ["eat","tea","tan","ate","nat","bat","tea"]
 output  = [["eat","tea","ate","tea"],["tan","nat"],["bat"]]
 
 
-# num_title Easy Medium---------------------------------------
+# 1539. Kth Missing Positive Number Easy---------------------------------------
+class Solution:
+    def findKthPositive(self, arr: List[int], k: int) -> int:
+        tmp = []
+        for i in range(1, len(arr)+k+1):
+            if i not in arr:
+                tmp.append(i)
+                if len(tmp) == k:
+                    return tmp[k-1]
+            i += 1
+
+
 # num_title Easy Medium---------------------------------------
 # num_title Easy Medium---------------------------------------
 # num_title Easy Medium---------------------------------------
