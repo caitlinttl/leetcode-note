@@ -596,17 +596,67 @@ where e.departmentId = d.id
 and (departmentId, salary) in 
 (select departmentId, max(salary) from Employee group by departmentId);
 
--- num_title Medium---------------------------------------
+-- 608. Tree Node Medium---------------------------------------
 -- Answer:
+select id,
+(case 
+when p_id is null then 'Root' 
+when (id in (select p_id from Tree)) then 'Inner' 
+else 'Leaf' end) 
+as 'type'
+from Tree;
 
--- num_title Medium---------------------------------------
+-- 626. Exchange Seats Medium---------------------------------------
+-- lead and lag 取得後一筆(lead)與前一筆(lag)，搭配over (order by xxx)使用
 -- Answer:
+select s.id,
+(case 
+when s.id % 2 = 1 and s.id = (select max(id) from Seat) then student
+when s.id % 2 = 1 then (select student from Seat where id = s.id + 1)
+when s.id % 2 = 0 then (select student from Seat where id = s.id - 1) end) 
+as student
+from Seat s;
 
--- num_title Medium---------------------------------------
--- Answer:
+select id,
+(case
+when id % 2 = 1 and id = (select max(id) from Seat) then student
+when id % 2 = 1 then (lead(student,1) over (ORDER BY id asc))
+when id % 2 = 0 then (lag(student,1) over (ORDER BY id asc))
+end) as student
+from Seat;
 
--- num_title Medium---------------------------------------
+-- 1158. Market Analysis I Medium---------------------------------------
+-- openbook
+-- where會把結果全過濾，而join...and會返回null不會過濾掉原表結果
+-- 最後group by 要用原表的條件
 -- Answer:
+select u.user_id as buyer_id, join_date,
+IFNULL(count(order_id),0) as orders_in_2019 -- 可以不用IFNULL
+from Users u
+left join Orders o
+on u.user_id = o.buyer_id
+AND year(o.order_date) = '2019'
+group by u.user_id;
 
--- num_title Medium---------------------------------------
+/* Why there is a difference between using AND YEAR(order_date) and WHERE YEAR(order_date) ??
+If you use where you are filtering the result after the left join, 
+in this case all the orders not in 2019 will be EXCLUDED. 
+The multiple conditions in left join is saying , 
+if I can not find matched id and satisfy YEAR(order_date) = '2019', 
+then the query result for that row will still be kept ,
+ but its joined columns will be null. */
+
+
+-- 1393. Capital Gain/Loss Medium---------------------------------------
+-- openbook
 -- Answer:
+select stock_name, sum(
+    CASE 
+        WHEN  operation = 'buy' THEN -price  
+        ELSE  price
+    END
+) as capital_gain_loss
+from Stocks
+GROUP BY stock_name;
+
+-- SUM(IF(operation='Buy',-price,price))
