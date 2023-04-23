@@ -25,12 +25,28 @@ class Solution:
         a=nums.index(target)
         print(a)
         return a
+        # return nums.index(target)
 
 
 nums = [1,3,5,6]
 target = 4
 # ans=Solution().searchInsert(nums=nums,target=target)
 # print(ans)
+
+# You must write an algorithm with O(log n) runtime complexity.
+# openbook
+class Solution:
+    def searchInsert(self, nums: List[int], target: int) -> int:
+        left = 0
+        right = len(nums)
+        while left < right:
+            mid = (left + right) // 2
+            if (nums[mid]) < target:
+                left = mid + 1
+            else:
+                right = mid
+        return left
+
 
 # 27. Remove Element Easy---------------------------------------
 class Solution:
