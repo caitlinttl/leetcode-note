@@ -165,6 +165,14 @@ class Solution:
             a.append(b)
         return a
 
+    def generate(self, numRows):
+        lists = []
+        for i in range(numRows):
+            lists.append([1]*(i+1))
+            if i>1 :
+                for j in range(1,i):
+                    lists[i][j]=lists[i-1][j-1]+lists[i-1][j]
+        return lists
 
 # 70. Climbing Stairs Easy---------------------------------------
 class Solution:
@@ -5345,5 +5353,61 @@ class Solution:
 # num_title Easy Medium---------------------------------------
 # num_title Easy Medium---------------------------------------
 # num_title Easy Medium---------------------------------------
+
+
+# Plus Minus Basic HackerRank -----------------------------------
+
+# print(round(x, n)) 它返回數字 x 四捨五入 n 小數點後的數字精度。
+pi = 3.141592653589793238
+print(round(pi, 2))      # 3.14  # 0.5
+print(format(pi, '.2f'))  # 3.14 # 0.50 用format才會補0
+
+
+#!/bin/python3
+
+import math
+import os
+import random
+import re
+import sys
+
+#
+# Complete the 'plusMinus' function below.
+#
+# The function accepts INTEGER_ARRAY arr as parameter.
+#
+
+def plusMinus(arr):
+    # Write your code here
+    p = 0
+    n = 0
+    z = 0
+    t = len(arr)
+    for i in arr:
+        if i > 0:
+            p += 1
+        elif i < 0:
+            n += 1
+        elif i == 0:
+            z += 1
+    
+    print(format((p/t), '.6f'))
+    print(format((n/t), '.6f'))
+    print(format((z/t), '.6f'))
+
+if __name__ == '__main__':
+    n = int(input().strip())
+
+    arr = list(map(int, input().rstrip().split()))
+
+    plusMinus(arr)
+
+
+
+
+# num_title Basic HackerRank -----------------------------------
+# num_title Basic HackerRank -----------------------------------
+# num_title Basic HackerRank -----------------------------------
+
 
 
